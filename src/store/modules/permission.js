@@ -1,6 +1,4 @@
-console.log('permission-start')
 import { asyncRouterMap, constantRouterMap } from '@/router'
-console.log('permission-router',constantRouterMap)
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param roles
