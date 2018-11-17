@@ -8,37 +8,40 @@
       <template v-if="device!=='mobile'">
         <error-log class="errLog-container right-menu-item"/>
 
-        <el-tooltip content="»´∆¡" effect="dark" placement="bottom">
+        <el-tooltip content="ÂÖ®Â±è" effect="dark" placement="bottom">
           <screenfull class="screenfull right-menu-item"/>
         </el-tooltip>
 
-        <el-tooltip content="≤ºæ÷¥Û–°" effect="dark" placement="bottom">
+        <el-tooltip content="Â∏ÉÂ±ÄÂ§ßÂ∞è" effect="dark" placement="bottom">
           <size-select class="international right-menu-item"/>
         </el-tooltip>
 
-        <el-tooltip content="÷˜Ã‚" effect="dark" placement="bottom">
+        <el-tooltip content="‰∏ªÈ¢ò" effect="dark" placement="bottom">
           <theme-picker class="theme-switch right-menu-item"/>
         </el-tooltip>
       </template>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img
+          src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80"
+           class="user-avatar">
+          <!-- :src="avatar+'?imageView2/1/w/80/h/80'" -->
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-               ◊“≥
+              È¶ñÈ°µ
             </el-dropdown-item>
           </router-link>
           <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
-              githubµÿ÷∑
+              È°πÁõÆÂú∞ÂùÄ
             </el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-              <span style="display:block;" @click="logout">ÕÀ≥ˆµ«¬º</span>
+              <span style="display:block;" @click="logout">ÈÄÄÂá∫ÁôªÂΩï</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

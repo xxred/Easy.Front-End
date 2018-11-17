@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-const Layout =() => import('@/views/layout/Layout')
+const Layout = () => import('@/views/layout/Layout')
 
 /* Router Modules */
 //import componentsRouter from './modules/components'
@@ -31,17 +31,17 @@ const Layout =() => import('@/views/layout/Layout')
   }
 **/
 export const constantRouterMap = [
-  //{
-  //  path: '/redirect',
-  //  component: Layout,
-  //  hidden: true,
-  //  children: [
-  //    {
-  //      path: '/redirect/:path*',
-  //      component: () => import('@/views/redirect/index')
-  //    }
-  //  ]
-  //},
+  {
+   path: '/redirect',
+   component: Layout,
+   hidden: true,
+   children: [
+     {
+       path: '/redirect/:path*',
+       component: () => import('@/views/redirect/index')
+     }
+   ]
+  },
   //{
   //  path: '/login',
   //  component: () => import('@/views/login/index'),
@@ -71,7 +71,7 @@ export const constantRouterMap = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
+        meta: { title: '首页', icon: 'dashboard', noCache: true }
       }
     ]
   },
@@ -97,7 +97,7 @@ export const constantRouterMap = [
         path: 'index',
         component: () => import('@/views/guide/index'),
         name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true }
+        meta: { title: '引导页', icon: 'guide', noCache: true }
       }
     ]
   }

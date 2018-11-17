@@ -1,12 +1,12 @@
 <template>
     <div class="app-container">
         <p class="warn-content">
-            ��������
+            引导页对于一些第一次进入项目的人很有用，你可以简单介绍下项目的功能。本 Demo 是基于
             <a href="https://github.com/kamranahmedse/driver.js" target="_blank">
                 driver.js.
             </a>
         </p>
-        <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">������</el-button>
+        <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">打开引导</el-button>
     </div>
 </template>
 
