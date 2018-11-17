@@ -1,9 +1,11 @@
+console.log('main-start')
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router'
+import { asyncRouterMap, constantRouterMap } from '@/router'
+console.log('main-router',constantRouterMap)
 import store from './store'
 import Cookies from 'js-cookie'
-
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
