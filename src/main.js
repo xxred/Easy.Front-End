@@ -13,7 +13,9 @@ import App from './App.vue';
 import router from './router'
 import store from './store'
 
-import './icons' // icon
+import './icons' // svgicon
+import './errorLog' // error log
+import './permission' // permission control
 
 // import * as filters from './filters' // global filters
 

@@ -42,16 +42,16 @@ export const constantRouterMap = [
      }
    ]
   },
-  //{
-  //  path: '/login',
-  //  component: () => import('@/views/login/index'),
-  //  hidden: true
-  //},
-  //{
-  //  path: '/auth-redirect',
-  //  component: () => import('@/views/login/authredirect'),
-  //  hidden: true
-  //},
+  {
+   path: '/login',
+   component: () => import('@/views/login/index'),
+   hidden: true
+  },
+  {
+   path: '/auth-redirect',
+   component: () => import('@/views/login/authredirect'),
+   hidden: true
+  },
   {
     path: '/404',
     component: () => import('@/views/errorPage/404'),
@@ -231,19 +231,19 @@ export const asyncRouterMap = [
   //  ]
   //},
 
-  //{
-  //  path: '/error-log',
-  //  component: Layout,
-  //  redirect: 'noredirect',
-  //  children: [
-  //    {
-  //      path: 'log',
-  //      component: () => import('@/views/errorLog/index'),
-  //      name: 'ErrorLog',
-  //      meta: { title: 'errorLog', icon: 'bug' }
-  //    }
-  //  ]
-  //},
+  {
+   path: '/error-log',
+   component: Layout,
+   redirect: 'noredirect',
+   children: [
+     {
+       path: 'log',
+       component: () => import('@/views/errorLog/index'),
+       name: 'ErrorLog',
+       meta: { title: 'errorLog', icon: 'bug' }
+     }
+   ]
+  },
 
   //{
   //  path: '/excel',

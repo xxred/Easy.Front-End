@@ -16,7 +16,7 @@
           <size-select class="international right-menu-item"/>
         </el-tooltip>
 
-        <el-tooltip content="主题" effect="dark" placement="bottom">
+        <el-tooltip content="换肤" effect="dark" placement="bottom">
           <theme-picker class="theme-switch right-menu-item"/>
         </el-tooltip>
       </template>

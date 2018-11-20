@@ -4,8 +4,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">{{ $t('login.title') }}</h3>
-        <lang-select class="set-language"/>
+        <h3 class="title">系统登录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -14,7 +13,7 @@
         </span>
         <el-input
           v-model="loginForm.username"
-          :placeholder="$t('login.username')"
+          placeholder="账号"
           name="username"
           type="text"
           auto-complete="on"
@@ -28,7 +27,7 @@
         <el-input
           :type="passwordType"
           v-model="loginForm.password"
-          :placeholder="$t('login.password')"
+          placeholder="密码"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin" />
@@ -37,22 +36,22 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
       <div class="tips">
-        <span>{{ $t('login.username') }} : admin</span>
-        <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+        <span>账号 : admin</span>
+        <span>密码 : 随便填</span>
       </div>
       <div class="tips">
-        <span style="margin-right:18px;">{{ $t('login.username') }} : editor</span>
-        <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+        <span style="margin-right:18px;">账号 : editor</span>
+        <span>密码 : 随便填</span>
       </div>
 
-      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{ $t('login.thirdparty') }}</el-button>
+      <el-button class="thirdparty-button" type="primary" @click="showDialog=true"> 第三方登录 </el-button>
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
-      {{ $t('login.thirdpartyTips') }}
+    <el-dialog title="第三方登录" :visible.sync="showDialog" append-to-body>
+      本地不能模拟，请结合自己业务进行模拟！！！
       <br>
       <br>
       <br>
@@ -79,8 +78,8 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 4) {
+        callback(new Error('The password can not be less than 4 digits'))
       } else {
         callback()
       }
