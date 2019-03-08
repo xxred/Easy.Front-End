@@ -1,22 +1,56 @@
 <template>
   <div class="social-signup-container">
-    <div class="sign-btn" @click="wechatHandleClick('wechat')">
-      <span class="wx-svg-container"><svg-icon icon-class="wechat" class="icon"/></span> 微信
+    <div
+      class="sign-btn"
+      @click="wechatHandleClick('wechat')"
+    >
+      <span class="wx-svg-container">
+        <svg-icon
+          icon-class="wechat"
+          class="icon"
+        /></span> 微信
     </div>
-    <div class="sign-btn" @click="tencentHandleClick('tencent')">
-      <span class="qq-svg-container"><svg-icon icon-class="qq" class="icon"/></span> QQ
+    <div
+      class="sign-btn"
+      @click="tencentHandleClick('tencent')"
+    >
+      <span class="qq-svg-container">
+        <svg-icon
+          icon-class="qq"
+          class="icon"
+        /></span> QQ
+    </div>
+
+    <div
+      class="sign-btn"
+      @click="githubHandleClick('github')"
+    >
+      <span class="github-svg-container">
+        <svg-icon
+          icon-class="github"
+          class="icon"
+        /></span> Github
     </div>
   </div>
 </template>
 
 <script>
-// import openWindow from '@/utils/openWindow'
+import openWindow from "@/utils/openWindow";
 
 export default {
-  name: 'SocialSignin',
+  name: "SocialSignin",
   methods: {
+    githubHandleClick(thirdpart) {
+      // this.$store.commit('SET_AUTH_TYPE', thirdpart)
+      // const appid = 'xxxxx'
+      // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
+      const url =
+        "http://localhost:51427/Admin/Account/Authorize?authenticationScheme=" +
+        thirdpart;
+      openWindow(url, thirdpart, 540, 540);
+    },
     wechatHandleClick(thirdpart) {
-      alert('ok')
+      alert("ok");
       // this.$store.commit('SET_AUTH_TYPE', thirdpart)
       // const appid = 'xxxxx'
       // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
@@ -24,7 +58,7 @@ export default {
       // openWindow(url, thirdpart, 540, 540)
     },
     tencentHandleClick(thirdpart) {
-      alert('ok')
+      alert("ok");
       // this.$store.commit('SET_AUTH_TYPE', thirdpart)
       // const client_id = 'xxxxx'
       // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
@@ -32,39 +66,44 @@ export default {
       // openWindow(url, thirdpart, 540, 540)
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .social-signup-container {
-    margin: 20px 0;
-    .sign-btn {
-      display: inline-block;
-      cursor: pointer;
-    }
-    .icon {
-      color: #fff;
-      font-size: 24px;
-      margin-top: 8px;
-    }
-    .wx-svg-container,
-    .qq-svg-container {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      line-height: 40px;
-      text-align: center;
-      padding-top: 1px;
-      border-radius: 4px;
-      margin-bottom: 20px;
-      margin-right: 5px;
-    }
-    .wx-svg-container {
-      background-color: #8ada53;
-    }
-    .qq-svg-container {
-      background-color: #6BA2D6;
-      margin-left: 50px;
-    }
+.social-signup-container {
+  margin: 20px 0;
+  .sign-btn {
+    display: inline-block;
+    cursor: pointer;
   }
+  .icon {
+    color: #fff;
+    font-size: 24px;
+    margin-top: 8px;
+  }
+  .github-svg-container,
+  .wx-svg-container,
+  .qq-svg-container {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    padding-top: 1px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    margin-right: 5px;
+  }
+  .github-svg-container {
+    background-color: #000;
+    margin-left: 50px;
+  }
+  .wx-svg-container {
+    background-color: #8ada53;
+  }
+  .qq-svg-container {
+    background-color: #6ba2d6;
+    margin-left: 50px;
+  }
+}
 </style>
