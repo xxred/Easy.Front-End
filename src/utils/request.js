@@ -1,21 +1,28 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import {
+  Message
+} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {
+  getToken
+} from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 5000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
+    // api 的 base_url
+    // 在此处设置baseURL，避免直接依赖store，如果放在上面create方法，store为空
+    config.baseURL = store.getters.baseUrl
+
     // Do something before request is sent
     if (store.getters.token) {
-      // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      config.headers['X-Token'] = getToken()
+      // 让每个请求携带token-- ['Authorization']为自定义key 请根据实际情况自行修改
+      config.headers['Authorization'] = getToken()
     }
     return config
   },
