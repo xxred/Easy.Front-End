@@ -9,7 +9,7 @@ import {
 
 // create an axios instance
 const service = axios.create({
-  timeout: 5000 // request timeout
+  timeout: 50000 // request timeout
 })
 
 // request interceptor
@@ -22,7 +22,7 @@ service.interceptors.request.use(
     // Do something before request is sent
     if (store.getters.token) {
       // 让每个请求携带token-- ['Authorization']为自定义key 请根据实际情况自行修改
-      config.headers['Authorization'] = getToken()
+      config.headers['Authorization'] = store.getters.token
     }
     return config
   },

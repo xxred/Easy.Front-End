@@ -30,27 +30,24 @@ const Layout = () => import('@/views/layout/Layout')
     noCache: true                if true ,the page will no be cached(default is false)
   }
 **/
-export const constantRouterMap = [
-  {
-   path: '/redirect',
-   component: Layout,
-   hidden: true,
-   children: [
-     {
-       path: '/redirect/:path*',
-       component: () => import('@/views/redirect/index')
-     }
-   ]
+export const constantRouterMap = [{
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '/redirect/:path*',
+      component: () => import('@/views/redirect/index')
+    }]
   },
   {
-   path: '/login',
-   component: () => import('@/views/login/index'),
-   hidden: true
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
   },
   {
-   path: '/auth-redirect',
-   component: () => import('@/views/login/authredirect'),
-   hidden: true
+    path: '/auth-redirect',
+    component: () => import('@/views/login/authredirect'),
+    hidden: true
   },
   {
     path: '/404',
@@ -66,14 +63,16 @@ export const constantRouterMap = [
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', noCache: true }
+    children: [{
+      path: 'dashboard',
+      component: () => import('@/views/dashboard/index'),
+      name: 'Dashboard',
+      meta: {
+        title: '首页',
+        icon: 'dashboard',
+        noCache: true
       }
-    ]
+    }]
   },
   //{
   //  path: '/documentation',
@@ -92,20 +91,24 @@ export const constantRouterMap = [
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: '引导页', icon: 'guide', noCache: true }
+    children: [{
+      path: 'index',
+      component: () => import('@/views/guide/index'),
+      name: 'Guide',
+      meta: {
+        title: '引导页',
+        icon: 'guide',
+        noCache: true
       }
-    ]
+    }]
   }
 ]
 
 export default new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRouterMap
 })
 
@@ -232,17 +235,18 @@ export const asyncRouterMap = [
   //},
 
   {
-   path: '/error-log',
-   component: Layout,
-   redirect: 'noredirect',
-   children: [
-     {
-       path: 'log',
-       component: () => import('@/views/errorLog/index'),
-       name: 'ErrorLog',
-       meta: { title: 'errorLog', icon: 'bug' }
-     }
-   ]
+    path: '/error-log',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [{
+      path: 'log',
+      component: () => import('@/views/errorLog/index'),
+      name: 'ErrorLog',
+      meta: {
+        title: 'errorLog',
+        icon: 'bug'
+      }
+    }]
   },
 
   //{
@@ -344,5 +348,9 @@ export const asyncRouterMap = [
   //  ]
   //},
 
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  }
 ]

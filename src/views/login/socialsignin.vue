@@ -23,7 +23,7 @@
 
     <div
       class="sign-btn"
-      @click="githubHandleClick('github')"
+      @click="githubHandleClick('Github')"
     >
       <span class="github-svg-container">
         <svg-icon
@@ -36,17 +36,20 @@
 
 <script>
 import openWindow from "@/utils/openWindow";
+import store from "@/store";
 
 export default {
   name: "SocialSignin",
   methods: {
     githubHandleClick(thirdpart) {
-      // this.$store.commit('SET_AUTH_TYPE', thirdpart)
-      // const appid = 'xxxxx'
-      // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
+      const redirect_uri = encodeURIComponent(window.location.origin);
       const url =
-        "http://localhost:51427/Admin/Account/Authorize?authenticationScheme=" +
-        thirdpart;
+        store.getters.baseUrl +
+        "/Admin/Account/Authorize?authenticationScheme=" +
+        thirdpart +
+        "&returnUrl=" +
+        redirect_uri +
+        "#auth-redirect";
       openWindow(url, thirdpart, 540, 540);
     },
     wechatHandleClick(thirdpart) {

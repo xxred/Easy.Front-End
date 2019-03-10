@@ -2,8 +2,8 @@ import request from '@/utils/request'
 
 export function loginByUsername(username, password) {
   let data = new FormData();
-  data.append("username",username);
-  data.append("password",password);
+  data.append("username", username);
+  data.append("password", password);
   return request({
     url: '/Admin/Account/Login',
     method: 'post',
@@ -13,16 +13,14 @@ export function loginByUsername(username, password) {
 
 export function logout() {
   return request({
-    url: '/login/logout',
+    url: '/admin/account/logout',
     method: 'post'
   })
 }
 
-export function getUserInfo(token) {
+export function getUserInfo() {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/admin/account',
+    method: 'get'
   })
 }
-

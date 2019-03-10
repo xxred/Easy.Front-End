@@ -1,10 +1,24 @@
 <script>
+// import { setToken, getToken } from "@/utils/auth";
 export default {
-  name: 'AuthRedirect',
+  name: "AuthRedirect",
   created() {
-    const hash = window.location.search.slice(1)
-    window.opener.location.href = window.location.origin + '/login#' + hash
-    window.close()
+    // const token = decodeURIComponent(
+    //   window.location.search.replace("?token=", "")
+    // );
+    // setToken(token);
+    // console.log("回调", getToken());
+    const hash = window.location.search.slice(1);
+    // if (search.length > 1) {
+    //   search = window.location.search + "&" + search.slice(1);
+    // } else {
+    //   search = window.location.search;
+    // }
+
+    let location = window.opener.location;
+    window.opener.location.href =
+      location.origin + location.pathname + location.search + "#" + hash;
+    window.close();
   }
-}
+};
 </script>
