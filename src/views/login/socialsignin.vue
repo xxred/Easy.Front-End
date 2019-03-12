@@ -31,6 +31,16 @@
           class="icon"
         /></span> Github
     </div>
+    <div
+      class="sign-btn"
+      @click="xiaobaiHandleClick('IdentityServer4')"
+    >
+      <span class="github-svg-container">
+        <svg-icon
+          icon-class="github"
+          class="icon"
+        /></span> 授权中心
+    </div>
   </div>
 </template>
 
@@ -41,15 +51,29 @@ import store from "@/store";
 export default {
   name: "SocialSignin",
   methods: {
-    githubHandleClick(thirdpart) {
-      const redirect_uri = encodeURIComponent(window.location.origin);
+    xiaobaiHandleClick(thirdpart) {
+      const redirect_uri = encodeURIComponent(
+        window.location.origin + "#auth-redirect"
+      );
       const url =
         store.getters.baseUrl +
         "/Admin/Account/Authorize?authenticationScheme=" +
         thirdpart +
         "&returnUrl=" +
-        redirect_uri +
-        "#auth-redirect";
+        redirect_uri;
+      console.log(url);
+      openWindow(url, thirdpart, 540, 540);
+    },
+    githubHandleClick(thirdpart) {
+      const redirect_uri = encodeURIComponent(
+        window.location.origin + "#auth-redirect"
+      );
+      const url =
+        store.getters.baseUrl +
+        "/Admin/Account/Authorize?authenticationScheme=" +
+        thirdpart +
+        "&returnUrl=" +
+        redirect_uri;
       openWindow(url, thirdpart, 540, 540);
     },
     wechatHandleClick(thirdpart) {
