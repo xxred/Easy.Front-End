@@ -57,7 +57,7 @@ export default {
       );
       const url =
         store.getters.baseUrl +
-        "/Admin/Account/Authorize?authenticationScheme=" +
+        "/External/Challenge?provider=" +
         thirdpart +
         "&returnUrl=" +
         redirect_uri;
@@ -70,7 +70,7 @@ export default {
       );
       const url =
         store.getters.baseUrl +
-        "/Admin/Account/Authorize?authenticationScheme=" +
+        "/External/Challenge?provider=" +
         thirdpart +
         "&returnUrl=" +
         redirect_uri;
