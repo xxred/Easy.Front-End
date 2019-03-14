@@ -214,7 +214,6 @@
     <Content Include="src\views\theme\index.vue" />
     <Content Include="src\views\zip\index.vue" />
     <None Include=".editorconfig" />
-    <Content Include="public\favicon.ico" />
     <Content Include="public\index.html" />
     <Content Include="src\App.vue" />
     <Content Include="package.json" />
