@@ -362,6 +362,7 @@
     <Compile Include="src\views\layout\mixin\ResizeHandler.js" />
     <Compile Include="src\views\svg-icons\requireIcons.js" />
     <Compile Include="src\views\table\treeTable\customEval.js" />
+    <Compile Include="vue.config.js" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\main.ts">
