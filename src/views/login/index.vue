@@ -167,9 +167,10 @@ export default {
           return false;
         }
       });
-    },
-    afterQRScan() {
-      const hash = window.location.hash.slice(2);
+      },
+      afterQRScan() {
+          debugger
+      const hash = window.location.hash.slice(1);
       // const hashObj = getQueryObject(hash);
       const token = decodeURIComponent(hash.replace("token=", ""));
 
