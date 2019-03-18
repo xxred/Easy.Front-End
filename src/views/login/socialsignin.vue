@@ -2,7 +2,7 @@
   <div class="social-signup-container">
     <div
       class="sign-btn"
-      @click="wechatHandleClick('wechat')"
+      @click="handleClick('wechat')"
     >
       <span class="wx-svg-container">
         <svg-icon
@@ -12,7 +12,7 @@
     </div>
     <div
       class="sign-btn"
-      @click="tencentHandleClick('tencent')"
+      @click="handleClick('QQ')"
     >
       <span class="qq-svg-container">
         <svg-icon
@@ -23,7 +23,7 @@
 
     <div
       class="sign-btn"
-      @click="githubHandleClick('Github')"
+      @click="handleClick('Github')"
     >
       <span class="github-svg-container">
         <svg-icon
@@ -33,7 +33,7 @@
     </div>
     <div
       class="sign-btn"
-      @click="xiaobaiHandleClick('IdentityServer4')"
+      @click="handleClick('IdentityServer4')"
     >
       <span class="github-svg-container">
         <svg-icon
@@ -51,20 +51,7 @@ import store from "@/store";
 export default {
   name: "SocialSignin",
   methods: {
-    xiaobaiHandleClick(thirdpart) {
-      const redirect_uri = encodeURIComponent(
-        window.location.origin + "#auth-redirect"
-      );
-      const url =
-        store.getters.baseUrl +
-        "/External/Challenge?provider=" +
-        thirdpart +
-        "&returnUrl=" +
-        redirect_uri;
-      console.log(url);
-      openWindow(url, thirdpart, 540, 540);
-    },
-    githubHandleClick(thirdpart) {
+    handleClick(thirdpart) {
       const redirect_uri = encodeURIComponent(
         "/auth-redirect"
       );
@@ -74,22 +61,6 @@ export default {
         "&returnUrl=" +
         redirect_uri;
       openWindow(url, thirdpart, 540, 540);
-    },
-    wechatHandleClick(thirdpart) {
-      alert("ok");
-      // this.$store.commit('SET_AUTH_TYPE', thirdpart)
-      // const appid = 'xxxxx'
-      // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
-      // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
-      // openWindow(url, thirdpart, 540, 540)
-    },
-    tencentHandleClick(thirdpart) {
-      alert("ok");
-      // this.$store.commit('SET_AUTH_TYPE', thirdpart)
-      // const client_id = 'xxxxx'
-      // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
-      // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri
-      // openWindow(url, thirdpart, 540, 540)
     }
   }
 };
