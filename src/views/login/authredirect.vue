@@ -3,13 +3,13 @@
 export default {
   name: "AuthRedirect",
   created() {
-    // const token = decodeURIComponent(
-    //   window.location.search.replace("?token=", "")
-    // );
+     const token = decodeURIComponent(
+       window.location.search.replace("?token=", "")
+     );
     // setToken(token);
     // console.log("回调", getToken());
     // const hash = window.location.search.slice(1);
-    const hash = window.location.hash.replace("#/auth-redirect#", "");
+    //const hash = window.location.hash.replace("#/auth-redirect#", "");
 
     debugger;
     // if (search.length > 1) {
@@ -21,7 +21,8 @@ export default {
     if (window.opener) {
       location = window.opener.location;
       location.href =
-        location.origin + location.pathname + location.search + "#" + hash;
+        //location.origin + location.pathname + location.search + "#" + hash;
+          location.origin + location.pathname + location.search + "#" + token;
       window.close();
     } else {
       location = window.location;
@@ -29,8 +30,7 @@ export default {
         location.origin +
         location.pathname +
         location.search +
-        "#/login#" +
-        hash;
+      "#" + token;
     }
   }
 };

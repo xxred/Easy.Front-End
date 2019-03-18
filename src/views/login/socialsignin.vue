@@ -66,11 +66,10 @@ export default {
     },
     githubHandleClick(thirdpart) {
       const redirect_uri = encodeURIComponent(
-        window.location.origin + "#auth-redirect"
+        "/auth-redirect"
       );
       const url =
-        store.getters.baseUrl +
-        "/External/Challenge?provider=" +
+        "/Admin/Account/Challenge?provider=" +
         thirdpart +
         "&returnUrl=" +
         redirect_uri;
