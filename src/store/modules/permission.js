@@ -1,5 +1,7 @@
 import { constantRouterMap } from '@/router'
 import { getRoutes } from '@/api/route'
+
+
 let asyncRouterMap
 
 /**
@@ -40,6 +42,28 @@ function requestRoutes() {
     return getRoutes()
 }
 
+function formatRoutes(routes) {
+  let fmRoutes = [];
+  routes.forEach(router=> {
+
+    let component = router.component
+    router.component = (resolve)=>{
+        require(['@/' + component + '.vue'], resolve)
+    }
+    
+    let children = router.children
+    if (children && children instanceof Array) {
+      children = formatRoutes(children);
+    }
+
+    router.children = children
+    
+    fmRoutes.push(router);
+  })
+
+  return fmRoutes;
+}
+
 const permission = {
     state: {
         routers: constantRouterMap,
@@ -57,7 +81,7 @@ const permission = {
                 const { roles } = data
                 let accessedRouters
                 let routeRes = await requestRoutes()
-                asyncRouterMap = routeRes.data
+                asyncRouterMap = formatRoutes(routeRes.data)
                 if (roles.includes('admin')) {
                     accessedRouters = asyncRouterMap
                 } else {
