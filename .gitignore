@@ -63,3 +63,4 @@ yarn.lock
 package-lock.json
 .vs/
 /dist
+/*.user
