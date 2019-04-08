@@ -64,3 +64,5 @@ package-lock.json
 .vs/
 /dist
 /*.user
+/obj
+/bin
