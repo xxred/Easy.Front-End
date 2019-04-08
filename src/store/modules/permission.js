@@ -1,8 +1,8 @@
-import { constantRouterMap } from '@/router'
+import { asyncRouterMap, constantRouterMap } from '@/router'
 import { getRoutes } from '@/api/route'
 
 
-let asyncRouterMap
+// let asyncRouterMap
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -48,7 +48,7 @@ function formatRoutes(routes) {
 
     let component = router.component
     router.component = (resolve)=>{
-        require(['@/' + component + '.vue'], resolve)
+        // require(['@/' + component + '.vue'], resolve) // TODO 这一行导致编译不通过，可能多加载了什么东西
     }
     
     let children = router.children
@@ -80,8 +80,8 @@ const permission = {
             return new Promise(async resolve => {
                 const { roles } = data
                 let accessedRouters
-                let routeRes = await requestRoutes()
-                asyncRouterMap = formatRoutes(routeRes.data)
+                // let routeRes = await requestRoutes()
+                // asyncRouterMap = formatRoutes(routeRes.data)
                 if (roles.includes('admin')) {
                     accessedRouters = asyncRouterMap
                 } else {

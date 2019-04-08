@@ -30,14 +30,17 @@ const Layout = () => import('@/views/layout/Layout')
     noCache: true                if true ,the page will no be cached(default is false)
   }
 **/
-export const constantRouterMap = [{
+export const constantRouterMap = [
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,
-    children: [{
-      path: '/redirect/:path*',
-      component: () => import('@/views/redirect/index')
-    }]
+    children: [
+      {
+        path: '/redirect/:path*',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
   },
   {
     path: '/login',
@@ -63,16 +66,18 @@ export const constantRouterMap = [{
     path: '',
     component: Layout,
     redirect: 'dashboard',
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
-      name: 'Dashboard',
-      meta: {
-        title: '首页',
-        icon: 'dashboard',
-        noCache: true
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: {
+          title: '首页',
+          icon: 'dashboard',
+          noCache: true
+        }
       }
-    }]
+    ]
   },
   //{
   //  path: '/documentation',
@@ -91,16 +96,18 @@ export const constantRouterMap = [{
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',
-    children: [{
-      path: 'index',
-      component: () => import('@/views/guide/index'),
-      name: 'Guide',
-      meta: {
-        title: '引导页',
-        icon: 'guide',
-        noCache: true
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/guide/index'),
+        name: 'Guide',
+        meta: {
+          title: '引导页',
+          icon: 'guide',
+          noCache: true
+        }
       }
-    }]
+    ]
   }
 ]
 
@@ -238,15 +245,17 @@ export const asyncRouterMap = [
     path: '/error-log',
     component: Layout,
     redirect: 'noredirect',
-    children: [{
-      path: 'log',
-      component: () => import('@/views/errorLog/index'),
-      name: 'ErrorLog',
-      meta: {
-        title: 'errorLog',
-        icon: 'bug'
+    children: [
+      {
+        path: 'log',
+        component: () => import('@/views/errorLog/index'),
+        name: 'ErrorLog',
+        meta: {
+          title: 'errorLog',
+          icon: 'bug'
+        }
       }
-    }]
+    ]
   },
 
   //{
@@ -347,7 +356,18 @@ export const asyncRouterMap = [
   //    }
   //  ]
   //},
-
+  {
+    path: '/user',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/admin/user'),
+        name: 'User',
+        meta: { title: '用户', icon: 'international' }
+      }
+    ]
+  },
   {
     path: '*',
     redirect: '/404',
