@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-const baseUrl = 'api/{tableName}'
+const baseUrl = '/api/{tableName}'
 
 export function searchData(tableName, page, search) {
   return request({
-    url: baseUrl.replace('{tableName}', tableName) + '/search',
+    url: baseUrl.replace('{tableName}', tableName) + '/Search',
     method: 'post',
     data: search,
     params: page

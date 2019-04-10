@@ -8,7 +8,12 @@
         class="filter-item"
       />
 
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
+      <el-button
+        v-waves
+        class="filter-item"
+        type="primary"
+        icon="el-icon-search"
+      >搜索</el-button>
 
       <el-button
         class="filter-item"
@@ -19,16 +24,28 @@
       >新增</el-button>
     </div>
 
-    <el-table :data="data">
+    <el-table
+      :data="data"
+      v-loading="listLoading"
+    >
       <el-table-column
         v-for="(column, idx) in tableColumns"
         :label="column.label"
         :prop="column.prop"
         :key="idx"
       ></el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        width="230"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleUpdate(scope.row)"
+          >编辑</el-button>
           <el-button
             v-if="scope.row.status != 'deleted'"
             size="mini"
@@ -39,7 +56,10 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <el-dialog
+      :title="textMap[dialogStatus]"
+      :visible.sync="dialogFormVisible"
+    >
       <el-form
         ref="dataForm"
         :model="temp"
@@ -47,16 +67,36 @@
         label-width="70px"
         style="width: 400px; margin-left:50px;"
       >
-        <el-form-item label="name" prop="name">
+        <el-form-item
+          label="userName"
+          prop="userName"
+        >
           <el-input
             :autosize="{ minRows: 2, maxRows: 4}"
-            v-model="temp.name"
+            v-model="temp.userName"
             type="text"
             placeholder="请输入名称"
           />
         </el-form-item>
+
+        <el-form-item
+          label="normalizedUserName"
+          prop="normalizedUserName"
+        >
+          <el-input
+            :autosize="{ minRows: 2, maxRows: 4}"
+            v-model="temp.normalizedUserName"
+            type="text"
+            placeholder="请输入名称"
+          />
+        </el-form-item>
+
       </el-form>
-      <div slot="footer" class="dialog-footer">
+
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button
           type="primary"
@@ -81,6 +121,7 @@ export default {
     return {
       dialogFormVisible: false,
       dialogStatus: "",
+      listLoading: true,
       listQuery: {
         page: 1,
         limit: 20,
@@ -96,13 +137,14 @@ export default {
       }
     };
   },
+  created() {
+    this.getList();
+  },
   methods: {
     createData() {
       this.$refs["dataForm"].validate(valid => {
-        console.log("创建。。。。。。");
         if (valid) {
           createData(this.tableName, this.temp).then(() => {
-            console.log("创建。。。。。。");
             this.data.unshift(this.temp);
             this.dialogFormVisible = false;
             this.$notify({
@@ -115,6 +157,18 @@ export default {
         }
       });
     },
+    getList() {
+      this.listLoading = true;
+      searchData(this.tableName, null, {}).then(response => {
+        this.data = response.data.data;
+        // this.total = response.data.total
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false;
+        }, 1.5 * 1000);
+      });
+    },
     handleCreate() {
       this.resetTemp();
       this.dialogStatus = "create";
@@ -124,14 +178,24 @@ export default {
       });
     },
     handleDelete(row) {
-      this.$notify({
-        title: "成功",
-        message: "删除成功",
-        type: "success",
-        duration: 2000
-      });
-      const index = this.data.indexOf(row);
-      this.data.splice(index, 1);
+      this.$confirm("此操作将删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deletData(this.tableName, row.id).then(() => {
+            this.$notify({
+              title: "成功",
+              message: "删除成功",
+              type: "success",
+              duration: 2000
+            });
+            const index = this.data.indexOf(row);
+            this.data.splice(index, 1);
+          });
+        })
+        .catch(() => {});
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
@@ -148,7 +212,7 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp);
-          updateArticle(tempData).then(() => {
+          updateData(this.tableName, tempData).then(() => {
             for (const v of this.data) {
               if (v.id === this.temp.id) {
                 const index = this.data.indexOf(v);

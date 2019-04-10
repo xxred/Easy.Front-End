@@ -19,6 +19,9 @@ service.interceptors.request.use(
     // 在此处设置baseURL，避免直接依赖store，如果放在上面create方法，store为空
     config.baseURL = store.getters.baseUrl
 
+    // 所有请求默认是json格式，除了上传文件，不用表单
+    config.headers['Content-Type'] = 'application/json; charset=UTF-8'
+
     // Do something before request is sent
     if (store.getters.token) {
       // 让每个请求携带token-- ['Authorization']为自定义key 请根据实际情况自行修改

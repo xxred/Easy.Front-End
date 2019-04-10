@@ -1,5 +1,9 @@
 <template>
-  <table-base :data="data" :table-columns="tableColumns" :table-name="tableName"></table-base>
+  <table-base
+    :data="data"
+    :table-columns="tableColumns"
+    :table-name="tableName"
+  ></table-base>
 </template>
 <script>
 import TableBase from "@/views/common/tableBase";
@@ -10,10 +14,11 @@ export default {
   data() {
     return {
       tableName: "User",
-      data: [{ id: 1, name: "name1" }, { id: 2, name: "name2" }],
+      data: [{ id: 1, userName: "name1" }, { id: 2, userName: "name2" }],
       tableColumns: [
         { label: "id", prop: "id" },
-        { label: "name", prop: "name" }
+        { label: "userName", prop: "userName" },
+        { label: "normalizedUserName", prop: "normalizedUserName" }
       ]
     };
   }
