@@ -12,6 +12,7 @@
         class="filter-item"
         type="primary"
         icon="el-icon-search"
+        @click="handleFilter"
       >搜索</el-button>
 
       <el-button
@@ -56,6 +57,14 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="getList"
+    />
 
     <el-dialog
       :title="textMap[dialogStatus]"
@@ -127,10 +136,12 @@ import {
   deletData,
   getColumns
 } from "@/api/base";
+import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 
 export default {
   name: "TableBase",
   props: ["tableData", "tableColumns", "tableName"],
+  components: { Pagination },
   data() {
     return {
       cols: undefined,
@@ -144,13 +155,14 @@ export default {
         importance: undefined,
         title: undefined,
         type: undefined,
-        sort: "+id"
+        sort: "id"
       },
       temp: {},
       textMap: {
         update: "编辑",
         create: "新增"
-      }
+      },
+      total: 0
     };
   },
   computed: {
@@ -201,15 +213,21 @@ export default {
     },
     async getList() {
       this.listLoading = true;
-      var response = await searchData(this.tableName, null, {});
+      var paper = {
+        orderBy: this.listQuery.sort,
+        pageIndex: this.listQuery.page,
+        pageSize: this.listQuery.limit,
+        retrieveTotalCount: true
+      };
+      var response = await searchData(this.tableName, paper, {});
 
       this.data = response.data.data;
-      // this.total = response.data.total
+      this.total = response.data.paper.totalCount;
 
       // Just to simulate the time of the request
       setTimeout(() => {
         this.listLoading = false;
-      }, 1.5 * 1000);
+      }, 0.5 * 1000);
     },
     handleCreate() {
       this.resetTemp();
@@ -238,6 +256,10 @@ export default {
           });
         })
         .catch(() => {});
+    },
+    handleFilter() {
+      this.listQuery.page = 1;
+      this.getList();
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row); // copy obj
