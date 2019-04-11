@@ -40,3 +40,10 @@ export function deletData(tableName, id) {
     method: 'delete'
   })
 }
+
+export function getColumns(tableName) {
+  return request({
+    url: baseUrl.replace('{tableName}', tableName) + '/GetColumns',
+    method: 'get'
+  })
+}

@@ -9,7 +9,6 @@
       />
 
       <el-button
-        v-waves
         class="filter-item"
         type="primary"
         icon="el-icon-search"
@@ -25,19 +24,21 @@
     </div>
 
     <el-table
-      :data="data"
+      :data="dataList"
       v-loading="listLoading"
     >
       <el-table-column
-        v-for="(column, idx) in tableColumns"
-        :label="column.label"
-        :prop="column.prop"
+        v-for="(column, idx) in columns"
+        :label="column.displayName"
+        :prop="column.name"
         :key="idx"
       ></el-table-column>
+
       <el-table-column
         label="操作"
         align="center"
         width="230"
+        fixed="right"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
@@ -64,31 +65,42 @@
         ref="dataForm"
         :model="temp"
         label-position="left"
-        label-width="70px"
+        label-width="100px"
         style="width: 400px; margin-left:50px;"
       >
         <el-form-item
-          label="userName"
-          prop="userName"
+          v-for="(column, idx) in columns"
+          :label="column.displayName"
+          :prop="column.name"
+          :key="idx"
         >
-          <el-input
-            :autosize="{ minRows: 2, maxRows: 4}"
-            v-model="temp.userName"
-            type="text"
-            placeholder="请输入名称"
-          />
-        </el-form-item>
 
-        <el-form-item
-          label="normalizedUserName"
-          prop="normalizedUserName"
-        >
-          <el-input
-            :autosize="{ minRows: 2, maxRows: 4}"
-            v-model="temp.normalizedUserName"
-            type="text"
-            placeholder="请输入名称"
+          <el-switch
+            v-if="column.typeStr=='Boolean'"
+            style="display: block"
+            v-model="temp[column.name]"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-text="是"
+            inactive-text="否"
+          >
+          </el-switch>
+
+          <el-date-picker
+            v-else-if="column.typeStr=='DateTime'"
+            v-model="temp[column.name]"
+            type="datetime"
+            format="yyyy-MM-dd HH:mm:ss"
+            placeholder="选择日期时间"
           />
+
+          <el-input
+            v-else
+            v-model="temp[column.name]"
+            type="text"
+            :placeholder="'请输入'+column.displayName"
+          />
+
         </el-form-item>
 
       </el-form>
@@ -112,13 +124,17 @@ import {
   queryData,
   createData,
   updateData,
-  deletData
+  deletData,
+  getColumns
 } from "@/api/base";
+
 export default {
   name: "TableBase",
-  props: ["data", "tableColumns", "tableName"],
+  props: ["tableData", "tableColumns", "tableName"],
   data() {
     return {
+      cols: undefined,
+      data: undefined,
       dialogFormVisible: false,
       dialogStatus: "",
       listLoading: true,
@@ -137,9 +153,31 @@ export default {
       }
     };
   },
-  created() {
-    this.getList();
+  computed: {
+    columns() {
+      if (this.cols) {
+        return this.cols;
+      }
+      if (this.tableColumns) {
+        return (this.cols = this.tableColumns);
+      }
+      this.getColumns();
+      return this.cols;
+    },
+    dataList() {
+      if (this.data) {
+        return this.data;
+      }
+
+      if (this.tableData) {
+        return (this.data = this.tableData);
+      }
+
+      this.getList();
+      return this.data;
+    }
   },
+  created() {},
   methods: {
     createData() {
       this.$refs["dataForm"].validate(valid => {
@@ -157,17 +195,21 @@ export default {
         }
       });
     },
-    getList() {
+    async getColumns() {
+      var response = await getColumns(this.tableName);
+      this.cols = response.data.data;
+    },
+    async getList() {
       this.listLoading = true;
-      searchData(this.tableName, null, {}).then(response => {
-        this.data = response.data.data;
-        // this.total = response.data.total
+      var response = await searchData(this.tableName, null, {});
 
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false;
-        }, 1.5 * 1000);
-      });
+      this.data = response.data.data;
+      // this.total = response.data.total
+
+      // Just to simulate the time of the request
+      setTimeout(() => {
+        this.listLoading = false;
+      }, 1.5 * 1000);
     },
     handleCreate() {
       this.resetTemp();
