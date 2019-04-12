@@ -1,17 +1,27 @@
 <template>
   <div class="icons-container">
     <p class="warn-content">
-      <a href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/icon.html" target="_blank">Add and use
+      <a
+        href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/icon.html"
+        target="_blank"
+      >Add and use
       </a>
     </p>
     <div class="icons-wrapper">
-      <div v-for="item of iconsMap" :key="item" @click="handleClipboard(generateIconCode(item),$event)">
+      <div
+        v-for="item of iconsMap"
+        :key="item"
+        @click="handleClipboard(generateIconCode(item),$event)"
+      >
         <el-tooltip placement="top">
           <div slot="content">
             {{ generateIconCode(item) }}
           </div>
           <div class="icon-item">
-            <svg-icon :icon-class="item" class-name="disabled" />
+            <svg-icon
+              :icon-class="item"
+              class-name="disabled"
+            />
             <span>{{ item }}</span>
           </div>
         </el-tooltip>
@@ -21,25 +31,25 @@
 </template>
 
 <script>
-import icons from './requireIcons'
-import clipboard from '@/utils/clipboard'
+import icons from "./requireIcons";
+import clipboard from "../../utils/clipboard";
 
 export default {
-  name: 'Icons',
+  name: "Icons",
   data() {
     return {
       iconsMap: icons
-    }
+    };
   },
   methods: {
     generateIconCode(symbol) {
-      return `<svg-icon icon-class="${symbol}" />`
+      return `<svg-icon icon-class="${symbol}" />`;
     },
     handleClipboard(text, event) {
-      clipboard(text, event)
+      clipboard(text, event);
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -64,7 +74,7 @@ export default {
     font-size: 24px;
     margin-top: 10px;
   }
-  .disabled{
+  .disabled {
     pointer-events: none;
   }
 }

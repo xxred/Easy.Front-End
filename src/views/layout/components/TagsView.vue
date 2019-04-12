@@ -1,6 +1,9 @@
 <template>
   <div class="tags-view-container">
-    <scroll-pane ref="scrollPane" class="tags-view-wrapper">
+    <scroll-pane
+      ref="scrollPane"
+      class="tags-view-wrapper"
+    >
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
@@ -10,23 +13,31 @@
         tag="span"
         class="tags-view-item"
         @click.middle.native="closeSelectedTag(tag)"
-        @contextmenu.prevent.native="openMenu(tag,$event)">
+        @contextmenu.prevent.native="openMenu(tag,$event)"
+      >
         {{ tag.title }}
-        <span class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <span
+          class="el-icon-close"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        />
       </router-link>
     </scroll-pane>
-    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-        <li @click="refreshSelectedTag(selectedTag)"> Ë¢ÐÂ </li>
-        <li @click="closeSelectedTag(selectedTag)"> ¹Ø±Õ </li>
-        <li @click="closeOthersTags"> ¹Ø±ÕÆäËü </li>
-        <li @click="closeAllTags"> ¹Ø±ÕËùÓÐ </li>
+    <ul
+      v-show="visible"
+      :style="{left:left+'px',top:top+'px'}"
+      class="contextmenu"
+    >
+      <li @click="refreshSelectedTag(selectedTag)"> Ë¢ï¿½ï¿½ </li>
+      <li @click="closeSelectedTag(selectedTag)"> ï¿½Ø±ï¿½ </li>
+      <li @click="closeOthersTags"> ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ </li>
+      <li @click="closeAllTags"> ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ </li>
     </ul>
   </div>
 </template>
 
 <script>
-import ScrollPane from '@/components/ScrollPane'
-import { generateTitle } from '@/utils/i18n'
+import ScrollPane from "../../../components/ScrollPane";
+import { generateTitle } from "../../../utils/i18n";
 
 export default {
   components: { ScrollPane },
@@ -36,112 +47,112 @@ export default {
       top: 0,
       left: 0,
       selectedTag: {}
-    }
+    };
   },
   computed: {
     visitedViews() {
-      return this.$store.state.tagsView.visitedViews
+      return this.$store.state.tagsView.visitedViews;
     }
   },
   watch: {
     $route() {
-      this.addViewTags()
-      this.moveToCurrentTag()
+      this.addViewTags();
+      this.moveToCurrentTag();
     },
     visible(value) {
       if (value) {
-        document.body.addEventListener('click', this.closeMenu)
+        document.body.addEventListener("click", this.closeMenu);
       } else {
-        document.body.removeEventListener('click', this.closeMenu)
+        document.body.removeEventListener("click", this.closeMenu);
       }
     }
   },
   mounted() {
-    this.addViewTags()
+    this.addViewTags();
   },
   methods: {
     generateTitle, // generateTitle by vue-i18n
     isActive(route) {
-      return route.path === this.$route.path
+      return route.path === this.$route.path;
     },
     addViewTags() {
-      const { name } = this.$route
+      const { name } = this.$route;
       if (name) {
-        this.$store.dispatch('addView', this.$route)
+        this.$store.dispatch("addView", this.$route);
       }
-      return false
+      return false;
     },
     moveToCurrentTag() {
-      const tags = this.$refs.tag
+      const tags = this.$refs.tag;
       this.$nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
-            this.$refs.scrollPane.moveToTarget(tag)
+            this.$refs.scrollPane.moveToTarget(tag);
 
             // when query is different then update
             if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch('updateVisitedView', this.$route)
+              this.$store.dispatch("updateVisitedView", this.$route);
             }
 
-            break
+            break;
           }
         }
-      })
+      });
     },
     refreshSelectedTag(view) {
-      this.$store.dispatch('delCachedView', view).then(() => {
-        const { fullPath } = view
+      this.$store.dispatch("delCachedView", view).then(() => {
+        const { fullPath } = view;
         this.$nextTick(() => {
           this.$router.replace({
-            path: '/redirect' + fullPath
-          })
-        })
-      })
+            path: "/redirect" + fullPath
+          });
+        });
+      });
     },
     closeSelectedTag(view) {
-      this.$store.dispatch('delView', view).then(({ visitedViews }) => {
+      this.$store.dispatch("delView", view).then(({ visitedViews }) => {
         if (this.isActive(view)) {
-          const latestView = visitedViews.slice(-1)[0]
+          const latestView = visitedViews.slice(-1)[0];
           if (latestView) {
-            this.$router.push(latestView)
+            this.$router.push(latestView);
           } else {
-            this.$router.push('/')
+            this.$router.push("/");
           }
         }
-      })
+      });
     },
     closeOthersTags() {
-      this.$router.push(this.selectedTag)
-      this.$store.dispatch('delOthersViews', this.selectedTag).then(() => {
-        this.moveToCurrentTag()
-      })
+      this.$router.push(this.selectedTag);
+      this.$store.dispatch("delOthersViews", this.selectedTag).then(() => {
+        this.moveToCurrentTag();
+      });
     },
     closeAllTags() {
-      this.$store.dispatch('delAllViews')
-      this.$router.push('/')
+      this.$store.dispatch("delAllViews");
+      this.$router.push("/");
     },
     openMenu(tag, e) {
-      const menuMinWidth = 105
-      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
-      const offsetWidth = this.$el.offsetWidth // container width
-      const maxLeft = offsetWidth - menuMinWidth // left boundary
-      const left = e.clientX - offsetLeft + 15 // 15: margin right
+      const menuMinWidth = 105;
+      const offsetLeft = this.$el.getBoundingClientRect().left; // container margin left
+      const offsetWidth = this.$el.offsetWidth; // container width
+      const maxLeft = offsetWidth - menuMinWidth; // left boundary
+      const left = e.clientX - offsetLeft + 15; // 15: margin right
 
       if (left > maxLeft) {
-        this.left = maxLeft
+        this.left = maxLeft;
       } else {
-        this.left = left
+        this.left = left;
       }
-      this.top = e.clientY
+      this.top = e.clientY;
 
-      this.visible = true
-      this.selectedTag = tag
+      this.visible = true;
+      this.selectedTag = tag;
     },
     closeMenu() {
-      this.visible = false
+      this.visible = false;
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -150,7 +161,7 @@ export default {
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -176,7 +187,7 @@ export default {
         color: #fff;
         border-color: #42b983;
         &::before {
-          content: '';
+          content: "";
           background: #fff;
           display: inline-block;
           width: 8px;
@@ -199,7 +210,7 @@ export default {
     font-size: 12px;
     font-weight: 400;
     color: #333;
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
     li {
       margin: 0;
       padding: 7px 16px;
@@ -222,10 +233,10 @@ export default {
       vertical-align: 2px;
       border-radius: 50%;
       text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
       &:before {
-        transform: scale(.6);
+        transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }

@@ -2,13 +2,17 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header">
-        <a class="link-type link-title" target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/theme.html">
+        <a
+          class="link-type link-title"
+          target="_blank"
+          href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/theme.html"
+        >
           {{ $t('theme.documentation') }}
         </a>
       </div>
       <div class="box-item">
         <span class="field-label">{{ $t('theme.change') }} : </span>
-        <el-switch v-model="theme"/>
+        <el-switch v-model="theme" />
         <code style="margin-top:15px;">{{ $t('theme.tips') }}</code>
       </div>
     </el-card>
@@ -22,18 +26,35 @@
     </div>
 
     <div class="block">
-      <el-button type="primary" icon="el-icon-edit"/>
-      <el-button type="primary" icon="el-icon-share"/>
-      <el-button type="primary" icon="el-icon-delete"/>
-      <el-button type="primary" icon="el-icon-search">Search</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-edit"
+      />
+      <el-button
+        type="primary"
+        icon="el-icon-share"
+      />
+      <el-button
+        type="primary"
+        icon="el-icon-delete"
+      />
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+      >Search</el-button>
       <el-button type="primary">
         Upload
-        <i class="el-icon-upload el-icon-right"/>
+        <i class="el-icon-upload el-icon-right" />
       </el-button>
     </div>
 
     <div class="block">
-      <el-tag v-for="tag in tags" :type="tag.type" :key="tag.type" class="tag-item">
+      <el-tag
+        v-for="tag in tags"
+        :type="tag.type"
+        :key="tag.type"
+        class="tag-item"
+      >
         {{ tag.name }}
       </el-tag>
     </div>
@@ -47,42 +68,42 @@
     </div>
 
     <div class="block">
-      <el-slider v-model="slideValue"/>
+      <el-slider v-model="slideValue" />
     </div>
 
   </div>
 </template>
 
 <script>
-import { toggleClass } from '@/utils'
-import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
+import { toggleClass } from "../../utils";
+import "../../assets/custom-theme/index.css"; // the theme changed version element-ui css
 
 export default {
-  name: 'Theme',
+  name: "Theme",
   data() {
     return {
       theme: false,
       tags: [
-        { name: 'Tag One', type: '' },
-        { name: 'Tag Two', type: 'info' },
-        { name: 'Tag Three', type: 'success' },
-        { name: 'Tag Four', type: 'warning' },
-        { name: 'Tag Five', type: 'danger' }
+        { name: "Tag One", type: "" },
+        { name: "Tag Two", type: "info" },
+        { name: "Tag Three", type: "success" },
+        { name: "Tag Four", type: "warning" },
+        { name: "Tag Five", type: "danger" }
       ],
       slideValue: 50,
       radio: 3
-    }
+    };
   },
   watch: {
     theme() {
-      toggleClass(document.body, 'custom-theme')
+      toggleClass(document.body, "custom-theme");
     }
   }
-}
+};
 </script>
 
 <style scoped>
-.field-label{
+.field-label {
   vertical-align: middle;
 }
 .box-card {

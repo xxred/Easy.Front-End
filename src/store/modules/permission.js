@@ -1,5 +1,10 @@
-import { asyncRouterMap, constantRouterMap } from '@/router'
-import { getRoutes } from '@/api/route'
+import {
+    asyncRouterMap,
+    constantRouterMap
+} from '../../router'
+import {
+    getRoutes
+} from '../../api/route'
 
 
 // let asyncRouterMap
@@ -26,7 +31,9 @@ function filterAsyncRouter(routes, roles) {
     const res = []
 
     routes.forEach(route => {
-        const tmp = { ...route }
+        const tmp = {
+            ...route
+        }
         if (hasPermission(roles, tmp)) {
             if (tmp.children) {
                 tmp.children = filterAsyncRouter(tmp.children, roles)
@@ -43,25 +50,25 @@ function requestRoutes() {
 }
 
 function formatRoutes(routes) {
-  let fmRoutes = [];
-  routes.forEach(router=> {
+    let fmRoutes = [];
+    routes.forEach(router => {
 
-    let component = router.component
-    router.component = (resolve)=>{
-        // require(['@/' + component + '.vue'], resolve) // TODO 这一行导致编译不通过，可能多加载了什么东西
-    }
-    
-    let children = router.children
-    if (children && children instanceof Array) {
-      children = formatRoutes(children);
-    }
+        let component = router.component
+        router.component = (resolve) => {
+            // require(['../../' + component + '.vue'], resolve) // TODO 这一行导致编译不通过，可能多加载了什么东西
+        }
 
-    router.children = children
-    
-    fmRoutes.push(router);
-  })
+        let children = router.children
+        if (children && children instanceof Array) {
+            children = formatRoutes(children);
+        }
 
-  return fmRoutes;
+        router.children = children
+
+        fmRoutes.push(router);
+    })
+
+    return fmRoutes;
 }
 
 const permission = {
@@ -76,9 +83,13 @@ const permission = {
         }
     },
     actions: {
-        GenerateRoutes({ commit }, data) {
+        GenerateRoutes({
+            commit
+        }, data) {
             return new Promise(async resolve => {
-                const { roles } = data
+                const {
+                    roles
+                } = data
                 let accessedRouters
                 // let routeRes = await requestRoutes()
                 // asyncRouterMap = formatRoutes(routeRes.data)

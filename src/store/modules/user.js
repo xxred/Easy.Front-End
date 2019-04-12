@@ -2,12 +2,12 @@ import {
   loginByUsername,
   logout,
   getUserInfo
-} from '@/api/login'
+} from '../../api/login'
 import {
   getToken,
   setToken,
   removeToken
-} from '@/utils/auth'
+} from '../../utils/auth'
 
 const user = {
   state: {

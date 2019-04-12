@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-const Layout = () => import('@/views/layout/Layout')
+const Layout = () => import('../views/layout/Layout')
 
 /* Router Modules */
 //import componentsRouter from './modules/components'
@@ -38,28 +38,28 @@ export const constantRouterMap = [
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
+        component: () => import('../views/redirect/index')
       }
     ]
   },
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('../views/login/index'),
     hidden: true
   },
   {
     path: '/auth-redirect',
-    component: () => import('@/views/login/authredirect'),
+    component: () => import('../views/login/authredirect'),
     hidden: true
   },
   {
     path: '/404',
-    component: () => import('@/views/errorPage/404'),
+    component: () => import('../views/errorPage/404'),
     hidden: true
   },
   {
     path: '/401',
-    component: () => import('@/views/errorPage/401'),
+    component: () => import('../views/errorPage/401'),
     hidden: true
   },
   {
@@ -69,7 +69,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('../views/dashboard/index'),
         name: 'Dashboard',
         meta: {
           title: '首页',
@@ -86,7 +86,7 @@ export const constantRouterMap = [
   //  children: [
   //    {
   //      path: 'index',
-  //      component: () => import('@/views/documentation/index'),
+  //      component: () => import('../views/documentation/index'),
   //      name: 'Documentation',
   //      meta: { title: 'documentation', icon: 'documentation', noCache: true }
   //    }
@@ -99,7 +99,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/guide/index'),
+        component: () => import('../views/guide/index'),
         name: 'Guide',
         meta: {
           title: '引导页',
@@ -133,7 +133,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'page',
-  //      component: () => import('@/views/permission/page'),
+  //      component: () => import('../views/permission/page'),
   //      name: 'PagePermission',
   //      meta: {
   //        title: 'pagePermission',
@@ -142,7 +142,7 @@ export const asyncRouterMap = [
   //    },
   //    {
   //      path: 'directive',
-  //      component: () => import('@/views/permission/directive'),
+  //      component: () => import('../views/permission/directive'),
   //      name: 'DirectivePermission',
   //      meta: {
   //        title: 'directivePermission'
@@ -158,7 +158,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'index',
-  //      component: () => import('@/views/svg-icons/index'),
+  //      component: () => import('../views/svg-icons/index'),
   //      name: 'Icons',
   //      meta: { title: 'icons', icon: 'icon', noCache: true }
   //    }
@@ -183,20 +183,20 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'create',
-  //      component: () => import('@/views/example/create'),
+  //      component: () => import('../views/example/create'),
   //      name: 'CreateArticle',
   //      meta: { title: 'createArticle', icon: 'edit' }
   //    },
   //    {
   //      path: 'edit/:id(\\d+)',
-  //      component: () => import('@/views/example/edit'),
+  //      component: () => import('../views/example/edit'),
   //      name: 'EditArticle',
   //      meta: { title: 'editArticle', noCache: true },
   //      hidden: true
   //    },
   //    {
   //      path: 'list',
-  //      component: () => import('@/views/example/list'),
+  //      component: () => import('../views/example/list'),
   //      name: 'ArticleList',
   //      meta: { title: 'articleList', icon: 'list' }
   //    }
@@ -209,7 +209,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'index',
-  //      component: () => import('@/views/tab/index'),
+  //      component: () => import('../views/tab/index'),
   //      name: 'Tab',
   //      meta: { title: 'tab', icon: 'tab' }
   //    }
@@ -228,13 +228,13 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: '401',
-  //      component: () => import('@/views/errorPage/401'),
+  //      component: () => import('../views/errorPage/401'),
   //      name: 'Page401',
   //      meta: { title: 'page401', noCache: true }
   //    },
   //    {
   //      path: '404',
-  //      component: () => import('@/views/errorPage/404'),
+  //      component: () => import('../views/errorPage/404'),
   //      name: 'Page404',
   //      meta: { title: 'page404', noCache: true }
   //    }
@@ -248,7 +248,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'log',
-        component: () => import('@/views/errorLog/index'),
+        component: () => import('../views/errorLog/index'),
         name: 'ErrorLog',
         meta: {
           title: 'errorLog',
@@ -270,19 +270,19 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'export-excel',
-  //      component: () => import('@/views/excel/exportExcel'),
+  //      component: () => import('../views/excel/exportExcel'),
   //      name: 'ExportExcel',
   //      meta: { title: 'exportExcel' }
   //    },
   //    {
   //      path: 'export-selected-excel',
-  //      component: () => import('@/views/excel/selectExcel'),
+  //      component: () => import('../views/excel/selectExcel'),
   //      name: 'SelectExcel',
   //      meta: { title: 'selectExcel' }
   //    },
   //    {
   //      path: 'upload-excel',
-  //      component: () => import('@/views/excel/uploadExcel'),
+  //      component: () => import('../views/excel/uploadExcel'),
   //      name: 'UploadExcel',
   //      meta: { title: 'uploadExcel' }
   //    }
@@ -298,7 +298,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'download',
-  //      component: () => import('@/views/zip/index'),
+  //      component: () => import('../views/zip/index'),
   //      name: 'ExportZip',
   //      meta: { title: 'exportZip' }
   //    }
@@ -312,7 +312,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'index',
-  //      component: () => import('@/views/theme/index'),
+  //      component: () => import('../views/theme/index'),
   //      name: 'Theme',
   //      meta: { title: 'theme', icon: 'theme' }
   //    }
@@ -326,7 +326,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'index',
-  //      component: () => import('@/views/clipboard/index'),
+  //      component: () => import('../views/clipboard/index'),
   //      name: 'ClipboardDemo',
   //      meta: { title: 'clipboardDemo', icon: 'clipboard' }
   //    }
@@ -339,7 +339,7 @@ export const asyncRouterMap = [
   //  children: [
   //    {
   //      path: 'index',
-  //      component: () => import('@/views/i18n-demo/index'),
+  //      component: () => import('../views/i18n-demo/index'),
   //      name: 'I18n',
   //      meta: { title: 'i18n', icon: 'international' }
   //    }
@@ -362,7 +362,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/admin/user'),
+        component: () => import('../views/admin/user'),
         name: 'User',
         meta: { title: '用户', icon: 'international' }
       }
