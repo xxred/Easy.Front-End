@@ -1,11 +1,11 @@
 <script>
-// import { setToken, getToken } from "@/utils/auth";
+// import { setToken, getToken } from "../../utils/auth";
 export default {
   name: "AuthRedirect",
   created() {
-     const token = decodeURIComponent(
-       window.location.search.replace("?token=", "")
-     );
+    const token = decodeURIComponent(
+      window.location.search.replace("?token=", "")
+    );
     // setToken(token);
     // console.log("回调", getToken());
     // const hash = window.location.search.slice(1);
@@ -22,15 +22,12 @@ export default {
       location = window.opener.location;
       location.href =
         //location.origin + location.pathname + location.search + "#" + hash;
-          location.origin + location.pathname + location.search + "#" + token;
+        location.origin + location.pathname + location.search + "#" + token;
       window.close();
     } else {
       location = window.location;
       location.href =
-        location.origin +
-        location.pathname +
-        location.search +
-      "#" + token;
+        location.origin + location.pathname + location.search + "#" + token;
     }
   }
 };

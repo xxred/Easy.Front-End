@@ -45,16 +45,14 @@
 </template>
 
 <script>
-import openWindow from "@/utils/openWindow";
-import store from "@/store";
+import openWindow from "../../utils/openWindow";
+import store from "../../store";
 
 export default {
   name: "SocialSignin",
   methods: {
     handleClick(thirdpart) {
-      const redirect_uri = encodeURIComponent(
-        "/auth-redirect"
-      );
+      const redirect_uri = encodeURIComponent("/auth-redirect");
       const url =
         "/Admin/Account/Challenge?provider=" +
         thirdpart +

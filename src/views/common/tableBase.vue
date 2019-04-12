@@ -135,8 +135,8 @@ import {
   updateData,
   deletData,
   getColumns
-} from "@/api/base";
-import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
+} from "../../api/base";
+import Pagination from "../../components/Pagination"; // Secondary package based on el-pagination
 
 export default {
   name: "TableBase",
