@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "VuejsApp", "VuejsApp.njsproj", "{E6B092F6-572E-4192-BB58-30A1D233D7B3}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Easy.Front-End", "Easy.Front-End.njsproj", "{E6B092F6-572E-4192-BB58-30A1D233D7B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
