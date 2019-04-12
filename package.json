@@ -1,14 +1,13 @@
 {
-  "name": "vuejs-app",
+  "name": "@xxred/easy-front-end",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --port=1337",
     "build": "vue-cli-service build"
   },
   "description": "Easy.Front-End",
   "author": {
-    "name": ""
+    "name": "xxred"
   },
   "dependencies": {
     "axios": "0.18.0",
