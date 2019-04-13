@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 import Cookies from 'js-cookie'
 
@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import './styles/index.scss' // global css
 
-import App from './App.vue';
+import App from './App.vue'
 import router from './router'
 import store from './store'
 
@@ -20,8 +20,8 @@ import './permission' // permission control
 // import * as filters from './filters' // global filters
 
 Vue.use(Element, {
-    size: Cookies.get('size') || 'medium', // set element-ui default size
-    //i18n: (key, value) => i18n.t(key, value)
+  size: Cookies.get('size') || 'medium' // set element-ui default size
+  // i18n: (key, value) => i18n.t(key, value)
 })
 
 // // register global utility filters.
@@ -29,10 +29,13 @@ Vue.use(Element, {
 //     Vue.filter(key, filters[key])
 // })
 
-Vue.config.productionTip = true;
+// 导入api设置
+store.dispatch('setDeafultApiSettings')
+
+Vue.config.productionTip = false
 
 new Vue({
-    router,
-    store,
-    render: h => h(App)
-}).$mount('#app');
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app')

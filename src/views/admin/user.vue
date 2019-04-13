@@ -1,15 +1,15 @@
 <template>
-  <table-base :table-name="tableName"></table-base>
+  <table-base :table-name="tableName" />
 </template>
 <script>
-import TableBase from "../../views/common/tableBase";
+import TableBase from '../../views/common/tableBase'
 export default {
-  name: "User",
+  name: 'User',
   components: { TableBase },
   data() {
     return {
-      tableName: "User"
-    };
+      tableName: 'User'
+    }
   }
-};
+}
 </script>

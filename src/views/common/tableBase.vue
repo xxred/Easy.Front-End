@@ -2,8 +2,8 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input
-        placeholder="请输入关键字"
         v-model="listQuery.title"
+        placeholder="请输入关键字"
         style="width: 200px;margin-right: 10px;"
         class="filter-item"
       />
@@ -25,15 +25,15 @@
     </div>
 
     <el-table
-      :data="dataList"
       v-loading="listLoading"
+      :data="dataList"
     >
       <el-table-column
         v-for="(column, idx) in columns"
+        :key="idx"
         :label="column.displayName"
         :prop="column.name"
-        :key="idx"
-      ></el-table-column>
+      />
 
       <el-table-column
         label="操作"
@@ -79,21 +79,20 @@
       >
         <el-form-item
           v-for="(column, idx) in columns"
+          :key="idx"
           :label="column.displayName"
           :prop="column.name"
-          :key="idx"
         >
 
           <el-switch
             v-if="column.typeStr=='Boolean'"
-            style="display: block"
             v-model="temp[column.name]"
+            style="display: block"
             active-color="#13ce66"
             inactive-color="#ff4949"
             active-text="是"
             inactive-text="否"
-          >
-          </el-switch>
+          />
 
           <el-date-picker
             v-else-if="column.typeStr=='DateTime'"
@@ -130,24 +129,23 @@
 <script>
 import {
   searchData,
-  queryData,
   createData,
   updateData,
   deletData,
   getColumns
-} from "../../api/base";
-import Pagination from "../../components/Pagination"; // Secondary package based on el-pagination
+} from '../../api/base'
+import Pagination from '../../components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: "TableBase",
-  props: ["tableData", "tableColumns", "tableName"],
+  name: 'TableBase',
   components: { Pagination },
+  props: ['tableData', 'tableColumns', 'tableName'],
   data() {
     return {
       cols: undefined,
       data: undefined,
       dialogFormVisible: false,
-      dialogStatus: "",
+      dialogStatus: '',
       listLoading: true,
       listQuery: {
         page: 1,
@@ -155,146 +153,154 @@ export default {
         importance: undefined,
         title: undefined,
         type: undefined,
-        sort: "id"
+        sort: 'id'
       },
       temp: {},
       textMap: {
-        update: "编辑",
-        create: "新增"
+        update: '编辑',
+        create: '新增'
       },
       total: 0
-    };
+    }
   },
   computed: {
     columns() {
       if (this.cols) {
-        return this.cols;
+        return this.cols
       }
       if (this.tableColumns) {
-        return (this.cols = this.tableColumns);
+        this.setCols(this.tableColumns)
+        return this.cols
       }
-      this.getColumns();
-      return this.cols;
+      this.getColumns()
+      return this.cols
     },
     dataList() {
       if (this.data) {
-        return this.data;
+        return this.data
       }
 
       if (this.tableData) {
-        return (this.data = this.tableData);
+        this.setData(this.tableData)
+        return this.data
       }
 
-      this.getList();
-      return this.data;
+      this.getList()
+      return this.data
     }
   },
   created() {},
   methods: {
     createData() {
-      this.$refs["dataForm"].validate(valid => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
           createData(this.tableName, this.temp).then(() => {
-            this.data.unshift(this.temp);
-            this.dialogFormVisible = false;
+            this.data.unshift(this.temp)
+            this.dialogFormVisible = false
             this.$notify({
-              title: "成功",
-              message: "创建成功",
-              type: "success",
+              title: '成功',
+              message: '创建成功',
+              type: 'success',
               duration: 2000
-            });
-          });
+            })
+          })
         }
-      });
+      })
     },
     async getColumns() {
-      var response = await getColumns(this.tableName);
-      this.cols = response.data.data;
+      var response = await getColumns(this.tableName)
+      this.cols = response.data.data
     },
     async getList() {
-      this.listLoading = true;
+      this.listLoading = true
       var paper = {
         orderBy: this.listQuery.sort,
         pageIndex: this.listQuery.page,
         pageSize: this.listQuery.limit,
         retrieveTotalCount: true
-      };
-      var response = await searchData(this.tableName, paper, {});
+      }
+      var response = await searchData(this.tableName, paper, {})
 
-      this.data = response.data.data;
-      this.total = response.data.paper.totalCount;
+      this.data = response.data.data
+      this.total = response.data.paper.totalCount
 
       // Just to simulate the time of the request
       setTimeout(() => {
-        this.listLoading = false;
-      }, 0.5 * 1000);
+        this.listLoading = false
+      }, 0.5 * 1000)
     },
     handleCreate() {
-      this.resetTemp();
-      this.dialogStatus = "create";
-      this.dialogFormVisible = true;
+      this.resetTemp()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
+        this.$refs['dataForm'].clearValidate()
+      })
     },
     handleDelete(row) {
-      this.$confirm("此操作将删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('此操作将删除该记录, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           deletData(this.tableName, row.id).then(() => {
             this.$notify({
-              title: "成功",
-              message: "删除成功",
-              type: "success",
+              title: '成功',
+              message: '删除成功',
+              type: 'success',
               duration: 2000
-            });
-            const index = this.data.indexOf(row);
-            this.data.splice(index, 1);
-          });
+            })
+            const index = this.data.indexOf(row)
+            this.data.splice(index, 1)
+          })
         })
-        .catch(() => {});
+        .catch(() => {})
     },
     handleFilter() {
-      this.listQuery.page = 1;
-      this.getList();
+      this.listQuery.page = 1
+      this.getList()
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row); // copy obj
-      this.dialogStatus = "update";
-      this.dialogFormVisible = true;
+      this.temp = Object.assign({}, row) // copy obj
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs["dataForm"].clearValidate();
-      });
+        this.$refs['dataForm'].clearValidate()
+      })
     },
     resetTemp() {
-      this.temp = {};
+      this.temp = {}
+    },
+    setCols(cols) {
+      this.cols = cols
+    },
+    setData(data) {
+      this.data = data
     },
     updateData() {
-      this.$refs["dataForm"].validate(valid => {
+      this.$refs['dataForm'].validate(valid => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp);
+          const tempData = Object.assign({}, this.temp)
           updateData(this.tableName, tempData).then(() => {
             for (const v of this.data) {
               if (v.id === this.temp.id) {
-                const index = this.data.indexOf(v);
-                this.data.splice(index, 1, this.temp);
-                break;
+                const index = this.data.indexOf(v)
+                this.data.splice(index, 1, this.temp)
+                break
               }
             }
-            this.dialogFormVisible = false;
+            this.dialogFormVisible = false
             this.$notify({
-              title: "成功",
-              message: "更新成功",
-              type: "success",
+              title: '成功',
+              message: '更新成功',
+              type: 'success',
               duration: 2000
-            });
-          });
+            })
+          })
         }
-      });
+      })
     }
   }
-};
+}
 </script>
