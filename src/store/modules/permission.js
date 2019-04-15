@@ -1,13 +1,5 @@
-import {
-    asyncRouterMap,
-    constantRouterMap
-} from '../../router'
-import {
-    getRoutes
-} from '../../api/route'
-
-
-// let asyncRouterMap
+import { asyncRouterMap, constantRouterMap } from '../../router'
+import { getRoutes } from '../../api/route'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -15,11 +7,11 @@ import {
  * @param route
  */
 function hasPermission(roles, route) {
-    if (route.meta && route.meta.roles) {
-        return roles.some(role => route.meta.roles.includes(role))
-    } else {
-        return true
-    }
+  if (route.meta && route.meta.roles) {
+    return roles.some(role => route.meta.roles.includes(role))
+  } else {
+    return true
+  }
 }
 
 /**
@@ -28,81 +20,79 @@ function hasPermission(roles, route) {
  * @param roles
  */
 function filterAsyncRouter(routes, roles) {
-    const res = []
+  const res = []
 
-    routes.forEach(route => {
-        const tmp = {
-            ...route
-        }
-        if (hasPermission(roles, tmp)) {
-            if (tmp.children) {
-                tmp.children = filterAsyncRouter(tmp.children, roles)
-            }
-            res.push(tmp)
-        }
-    })
+  routes.forEach(route => {
+    const tmp = {
+      ...route
+    }
+    if (hasPermission(roles, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRouter(tmp.children, roles)
+      }
+      res.push(tmp)
+    }
+  })
 
-    return res
+  return res
 }
 
 function requestRoutes() {
-    return getRoutes()
+  return getRoutes()
 }
 
 function formatRoutes(routes) {
-    let fmRoutes = [];
-    routes.forEach(router => {
+  const fmRoutes = []
+  routes.forEach(router => {
+    const component = router.component
+    router.component = resolve => {
+      // 动态加载组件会编译加载项目所有组件
+      // require(['../../' + component + '.vue'], resolve)
+    }
 
-        let component = router.component
-        router.component = (resolve) => {
-            // require(['../../' + component + '.vue'], resolve) // TODO 这一行导致编译不通过，可能多加载了什么东西
-        }
+    let children = router.children
+    if (children && children instanceof Array) {
+      children = formatRoutes(children)
+    }
 
-        let children = router.children
-        if (children && children instanceof Array) {
-            children = formatRoutes(children);
-        }
+    router.children = children
 
-        router.children = children
+    fmRoutes.push(router)
+  })
 
-        fmRoutes.push(router);
-    })
-
-    return fmRoutes;
+  return fmRoutes
 }
 
 const permission = {
-    state: {
-        routers: constantRouterMap,
-        addRouters: []
-    },
-    mutations: {
-        SET_ROUTERS: (state, routers) => {
-            state.addRouters = routers
-            state.routers = constantRouterMap.concat(routers)
-        }
-    },
-    actions: {
-        GenerateRoutes({
-            commit
-        }, data) {
-            return new Promise(async resolve => {
-                const {
-                    roles
-                } = data
-                let accessedRouters
-                // let routeRes = await requestRoutes()
-                // asyncRouterMap = formatRoutes(routeRes.data)
-                if (roles.includes('admin')) {
-                    accessedRouters = asyncRouterMap
-                } else {
-                    accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-                }
-                commit('SET_ROUTERS', accessedRouters)
-                resolve()
-            })
-        }
+  state: {
+    // 将展示在侧边栏的菜单
+    routers: constantRouterMap,
+    // 将要添加到路由系统中的新路由
+    addRouters: []
+  },
+  mutations: {
+    SET_ROUTERS: (state, routers) => {
+      state.addRouters = state.addRouters.concat(routers)
+      state.routers = state.routers.concat(routers)
     }
+  },
+  actions: {
+    GenerateRoutes({ commit }, data) {
+      return new Promise(async resolve => {
+        const { roles } = data
+        let accessedRouters
+        // const routeRes = await requestRoutes()
+        // const asyncRouterMap = formatRoutes(routeRes.data)
+        if (roles.includes('admin')) {
+          accessedRouters = asyncRouterMap
+        } else {
+          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        }
+        commit('SET_ROUTERS', accessedRouters)
+        resolve()
+      })
+    }
+  }
 }
 
 export default permission
