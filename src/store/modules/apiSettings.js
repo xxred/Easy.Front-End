@@ -21,22 +21,12 @@ const apiSettings = {
   },
   actions: {
     /** 设置api设置 */
-    setApiSettings({
-      commit
-    }, apiSettings) {
-      commit('Set_ApiSettings', apiSettings)
-    },
-    /** 读取默认api设置进行设置 */
-    setDeafultApiSettings({
-      commit
-    }) {
-      let apiSettings = {
-        baseUrl: ''
-      }
-      apiSettings = deafultApiSettings(apiSettings)
+    setApiSettings({ commit }, apiSettings) {
       commit('Set_ApiSettings', apiSettings)
     }
   }
 }
+
+apiSettings.state.settings = deafultApiSettings(apiSettings.state.settings)
 
 export default apiSettings

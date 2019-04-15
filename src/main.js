@@ -29,9 +29,6 @@ Vue.use(Element, {
 //     Vue.filter(key, filters[key])
 // })
 
-// 导入api设置
-store.dispatch('setDeafultApiSettings')
-
 Vue.config.productionTip = false
 
 new Vue({
