@@ -47,7 +47,7 @@ function formatRoutes(routes) {
     const component = router.component
     router.component = resolve => {
       // 动态加载组件会编译加载项目所有组件
-      // require(['../../' + component + '.vue'], resolve)
+      require([component + '.vue'], resolve)
     }
 
     let children = router.children
@@ -81,12 +81,12 @@ const permission = {
       return new Promise(async resolve => {
         const { roles } = data
         let accessedRouters
-        // const routeRes = await requestRoutes()
-        // const asyncRouterMap = formatRoutes(routeRes.data)
+        const routeRes = await requestRoutes()
+        const asyncRouters = asyncRouterMap.concat(formatRoutes(routeRes.data))
         if (roles.includes('admin')) {
-          accessedRouters = asyncRouterMap
+          accessedRouters = asyncRouters
         } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+          accessedRouters = filterAsyncRouter(asyncRouters, roles)
         }
         commit('SET_ROUTERS', accessedRouters)
         resolve()
