@@ -4,8 +4,8 @@ const login = {
   getUserInfo: '/admin/account'
 }
 
-export default (settings) => {
-  settings.baseUrl = ''
+export default settings => {
+  settings.baseUrl = 'https://localhost:44336'
   settings.login = login
   return settings
 }

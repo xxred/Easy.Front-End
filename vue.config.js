@@ -10,8 +10,7 @@ module.exports = {
     config.module
       .rule('svg-sprite-loader')
       .test(/\.svg$/)
-      .include
-      .add(resolve('src/icons')) // 处理svg目录
+      .include.add(resolve('src/icons')) // 处理svg目录
       .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
@@ -19,5 +18,9 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
   },
-  configureWebpack: (config) => {}
+  configureWebpack: config => {},
+  devServer: {
+    proxy: 'https://localhost:44336/',
+    https: false
+  }
 }
