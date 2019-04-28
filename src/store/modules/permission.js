@@ -48,7 +48,9 @@ function formatRoutes(routes) {
       const component = router.component
       router.component = resolve => {
         // 动态加载组件会编译加载项目所有组件
-        require([component + '.vue'], resolve)
+        // 这里不能全写变量，写开头确定起始地址，写结尾确定文件名
+        // 这样就相当于编译'@/**/*.vue'，编译之后模块列表才会有所有的模块，传模块路径匹配才会命中
+        require(['@/' + component + '.vue'], resolve)
       }
     } else if (router.template) {
       router.component = resolve => {
@@ -80,8 +82,8 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-      state.addRouters = state.addRouters.concat(routers)
-      state.routers = state.routers.concat(routers)
+      state.addRouters = routers
+      state.routers = constantRouterMap.concat(routers)
     }
   },
   actions: {
