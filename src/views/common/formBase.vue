@@ -1,0 +1,51 @@
+<template>
+  <el-form
+    ref="dataForm"
+    :model="temp"
+    label-position="left"
+    label-width="120px"
+    style="width: 400px; margin-left:50px;"
+  >
+    <el-form-item
+      v-for="(column, idx) in columns"
+      :key="idx"
+      :label="column.displayName"
+      :prop="column.name"
+    >
+
+      <el-switch
+        v-if="column.typeStr=='Boolean'"
+        v-model="temp[column.name]"
+        style="display: block"
+        active-color="#13ce66"
+        inactive-color="#ff4949"
+        active-text="是"
+        inactive-text="否"
+      />
+
+      <el-date-picker
+        v-else-if="column.typeStr=='DateTime'"
+        v-model="temp[column.name]"
+        type="datetime"
+        format="yyyy-MM-dd HH:mm:ss"
+        placeholder="选择日期时间"
+      />
+
+      <el-input
+        v-else
+        v-model="temp[column.name]"
+        type="text"
+        :placeholder="'请输入'+column.displayName"
+      />
+
+    </el-form-item>
+
+  </el-form>
+
+</template>
+<script>
+export default {
+  name: 'FormBase',
+  props: ['columns', 'temp']
+}
+</script>

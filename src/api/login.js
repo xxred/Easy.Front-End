@@ -2,7 +2,7 @@ import request from '../utils/request'
 import store from '../store'
 
 /* 此模块与store互相依赖，故使用方法返回结果 */
-const login = () => store.getters.apiSettings.login
+const api = () => store.getters.apiSettings.login
 
 export function loginByUsername(username, password) {
   // let data = new FormData();
@@ -15,7 +15,7 @@ export function loginByUsername(username, password) {
   }
 
   return request({
-    url: login().loginByUsername,
+    url: api().loginByUsername,
     method: 'get',
     // data,
     params: data
@@ -24,14 +24,14 @@ export function loginByUsername(username, password) {
 
 export function logout() {
   return request({
-    url: login().logout,
+    url: api().logout,
     method: 'post'
   })
 }
 
 export function getUserInfo() {
   return request({
-    url: login().getUserInfo,
+    url: api().getUserInfo,
     method: 'get'
   })
 }

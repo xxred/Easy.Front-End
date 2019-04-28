@@ -44,10 +44,18 @@ function requestRoutes() {
 function formatRoutes(routes) {
   const fmRoutes = []
   routes.forEach(router => {
-    const component = router.component
-    router.component = resolve => {
-      // 动态加载组件会编译加载项目所有组件
-      require([component + '.vue'], resolve)
+    if (router.component) {
+      const component = router.component
+      router.component = resolve => {
+        // 动态加载组件会编译加载项目所有组件
+        require([component + '.vue'], resolve)
+      }
+    } else if (router.template) {
+      router.component = resolve => {
+        resolve({
+          template: router.template
+        })
+      }
     }
 
     let children = router.children

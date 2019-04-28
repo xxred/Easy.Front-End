@@ -356,18 +356,18 @@ export const asyncRouterMap = [
   //    }
   //  ]
   //},
-  {
-    path: '/user',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('../views/admin/user'),
-        name: 'User',
-        meta: { title: '用户', icon: 'international' }
-      }
-    ]
-  },
+  // {
+  //   path: '/user',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('../views/admin/user'),
+  //       name: 'User',
+  //       meta: { title: '用户', icon: 'international' }
+  //     }
+  //   ]
+  // },
   {
     path: '*',
     redirect: '/404',

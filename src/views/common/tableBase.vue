@@ -70,48 +70,15 @@
       :title="textMap[dialogStatus]"
       :visible.sync="dialogFormVisible"
     >
-      <el-form
-        ref="dataForm"
-        :model="temp"
-        label-position="left"
-        label-width="100px"
-        style="width: 400px; margin-left:50px;"
-      >
-        <el-form-item
-          v-for="(column, idx) in columns"
-          :key="idx"
-          :label="column.displayName"
-          :prop="column.name"
+
+      <slot v-bind:columns="columns">
+        <form-base
+          ref="formBase"
+          :columns="columns"
+          :temp="temp"
         >
-
-          <el-switch
-            v-if="column.typeStr=='Boolean'"
-            v-model="temp[column.name]"
-            style="display: block"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-            active-text="是"
-            inactive-text="否"
-          />
-
-          <el-date-picker
-            v-else-if="column.typeStr=='DateTime'"
-            v-model="temp[column.name]"
-            type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-          />
-
-          <el-input
-            v-else
-            v-model="temp[column.name]"
-            type="text"
-            :placeholder="'请输入'+column.displayName"
-          />
-
-        </el-form-item>
-
-      </el-form>
+        </form-base>
+      </slot>
 
       <div
         slot="footer"
@@ -135,10 +102,11 @@ import {
   getColumns
 } from '../../api/base'
 import Pagination from '../../components/Pagination' // Secondary package based on el-pagination
+import FormBase from './formBase'
 
 export default {
   name: 'TableBase',
-  components: { Pagination },
+  components: { Pagination, FormBase },
   props: ['tableData', 'tableColumns', 'tableName'],
   data() {
     return {
@@ -192,7 +160,7 @@ export default {
   created() {},
   methods: {
     createData() {
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs['formBase'].$refs['dataForm'].validate(valid => {
         if (valid) {
           createData(this.tableName, this.temp).then(() => {
             this.data.unshift(this.temp)
@@ -234,7 +202,7 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs['formBase'].$refs['dataForm'].clearValidate()
       })
     },
     handleDelete(row) {
@@ -266,7 +234,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs['formBase'].$refs['dataForm'].clearValidate()
       })
     },
     resetTemp() {
@@ -279,7 +247,7 @@ export default {
       this.data = data
     },
     updateData() {
-      this.$refs['dataForm'].validate(valid => {
+      this.$refs['formBase'].$refs['dataForm'].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           updateData(this.tableName, tempData).then(() => {
