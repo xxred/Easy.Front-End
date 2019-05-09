@@ -58,6 +58,20 @@ function formatRoutes(routes) {
           template: router.template
         })
       }
+    } else {
+      const component = `${router.name}/index`
+      router.component = async resolve => {
+        try {
+          // 尝试加载模块
+          await require(['@/views/' + component + '.vue'], resolve)
+        } catch {
+          // 加载失败，不存在此模块，使用默认模板
+          console.log('@/views/' + component + '.vue不存在，加载默认模板')
+          resolve({
+            template: `<table-base table-name="${router.name}" />`
+          })
+        }
+      }
     }
 
     let children = router.children
