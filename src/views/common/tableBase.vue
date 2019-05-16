@@ -1,95 +1,108 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input
-        v-model="listQuery.title"
-        placeholder="请输入关键字"
-        style="width: 200px;margin-right: 10px;"
-        class="filter-item"
-      />
+      <slot name="filter">
+        <el-input
+          v-model="listQuery.title"
+          placeholder="请输入关键字"
+          style="width: 200px;margin-right: 10px;"
+          class="filter-item"
+        />
 
-      <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="handleFilter"
-      >搜索</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          icon="el-icon-search"
+          @click="handleFilter"
+        >搜索</el-button>
 
-      <el-button
-        class="filter-item"
-        style="margin-left: 10px;"
-        type="primary"
-        icon="el-icon-edit"
-        @click="handleCreate"
-      >新增</el-button>
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          type="primary"
+          icon="el-icon-edit"
+          @click="handleCreate"
+        >新增</el-button>
+      </slot>
     </div>
 
     <el-table
       v-loading="listLoading"
       :data="dataList"
     >
-      <el-table-column
-        v-for="(column, idx) in columns"
-        :key="idx"
-        :label="column.displayName"
-        :prop="column.name"
-      />
+      <slot name="tableColumns">
+        <el-table-column
+          v-for="(column, idx) in columns"
+          :key="idx"
+          :label="column.displayName"
+          :prop="column.name"
+        />
+      </slot>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        width="230"
-        fixed="right"
-        class-name="small-padding fixed-width"
-      >
-        <template slot-scope="scope">
-          <el-button
-            type="primary"
-            size="mini"
-            @click="handleUpdate(scope.row)"
-          >编辑</el-button>
-          <el-button
-            v-if="scope.row.status != 'deleted'"
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.row)"
-          >删除</el-button>
-        </template>
-      </el-table-column>
+      <slot name="tableActions">
+        <el-table-column
+          label="操作"
+          align="center"
+          width="230"
+          fixed="right"
+          class-name="small-padding fixed-width"
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="primary"
+              size="mini"
+              @click="handleUpdate(scope.row)"
+            >编辑</el-button>
+            <el-button
+              v-if="scope.row.status != 'deleted'"
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row)"
+            >删除</el-button>
+          </template>
+        </el-table-column>
+      </slot>
+
     </el-table>
-
-    <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />
+    <slot name="page">
+      <pagination
+        v-show="total>0"
+        :total="total"
+        :page.sync="listQuery.page"
+        :limit.sync="listQuery.limit"
+        @pagination="getList"
+      />
+    </slot>
 
     <el-dialog
       :title="textMap[dialogStatus]"
       :visible.sync="dialogFormVisible"
     >
 
-      <slot v-bind:columns="columns">
+      <slot
+        name="formColumns"
+        :columns="columns"
+      >
         <form-base
           ref="formBase"
           :columns="columns"
           :temp="temp"
-        >
-        </form-base>
+        />
       </slot>
 
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button
-          type="primary"
-          @click="dialogStatus === 'create' ? createData() : updateData()"
-        >确认</el-button>
-      </div>
+      <slot name="dialogFooter">
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button
+            type="primary"
+            @click="dialogStatus === 'create' ? createData() : updateData()"
+          >确认</el-button>
+        </div>
+      </slot>
+
     </el-dialog>
   </div>
 </template>
@@ -107,7 +120,12 @@ import FormBase from './formBase'
 export default {
   name: 'TableBase',
   components: { Pagination, FormBase },
-  props: ['tableData', 'tableColumns', 'tableName'],
+  props: {
+    tableData: Array,
+    tableColumns: Array,
+    tableName: String,
+    afterClickEditBtnFun: Function
+  },
   data() {
     return {
       cols: undefined,
@@ -155,12 +173,23 @@ export default {
 
       this.getList()
       return this.data
+    },
+    dataForm() {
+      let formBase = this.$refs['formBase']
+      if (!formBase) return null
+
+      let dataForm = formBase['formBase']
+      if (!dataForm) {
+        return null
+      }
+
+      return dataForm
     }
   },
   created() {},
   methods: {
     createData() {
-      this.$refs['formBase'].$refs['dataForm'].validate(valid => {
+      this.dataForm.validate(valid => {
         if (valid) {
           createData(this.tableName, this.temp).then(() => {
             this.data.unshift(this.temp)
@@ -202,7 +231,7 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['formBase'].$refs['dataForm'].clearValidate()
+        this.dataForm.clearValidate()
       })
     },
     handleDelete(row) {
@@ -233,9 +262,16 @@ export default {
       this.temp = Object.assign({}, row) // copy obj
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['formBase'].$refs['dataForm'].clearValidate()
-      })
+      if (this.afterClickEditBtnFun) {
+        this.afterClickEditBtnFun()
+      } else {
+        let df = this.dataForm
+        if (df) {
+          this.$nextTick(() => {
+            df.clearValidate()
+          })
+        }
+      }
     },
     resetTemp() {
       this.temp = {}
@@ -247,7 +283,7 @@ export default {
       this.data = data
     },
     updateData() {
-      this.$refs['formBase'].$refs['dataForm'].validate(valid => {
+      this.dataForm.validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           updateData(this.tableName, tempData).then(() => {
