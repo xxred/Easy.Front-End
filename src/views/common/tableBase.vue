@@ -90,18 +90,18 @@
         />
       </slot>
 
-      <slot name="dialogFooter">
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
+      <div
+        slot="footer"
+        class="dialog-footer"
+      >
+        <slot name="dialogFooter">
           <el-button @click="dialogFormVisible = false">取消</el-button>
           <el-button
             type="primary"
             @click="dialogStatus === 'create' ? createData() : updateData()"
           >确认</el-button>
-        </div>
-      </slot>
+        </slot>
+      </div>
 
     </el-dialog>
   </div>
@@ -124,6 +124,7 @@ export default {
     tableData: Array,
     tableColumns: Array,
     tableName: String,
+    afterClickAddBtnFun: Function,
     afterClickEditBtnFun: Function
   },
   data() {
@@ -177,8 +178,7 @@ export default {
     dataForm() {
       let formBase = this.$refs['formBase']
       if (!formBase) return null
-
-      let dataForm = formBase['formBase']
+      let dataForm = formBase.$refs['formBase']
       if (!dataForm) {
         return null
       }
@@ -230,9 +230,16 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.dataForm.clearValidate()
-      })
+      if (this.afterClickAddBtnFun) {
+        this.afterClickAddBtnFun()
+      } else {
+        let df = this.dataForm
+        if (df) {
+          this.$nextTick(() => {
+            df.clearValidate()
+          })
+        }
+      }
     },
     handleDelete(row) {
       this.$confirm('此操作将删除该记录, 是否继续?', '提示', {
@@ -263,7 +270,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       if (this.afterClickEditBtnFun) {
-        this.afterClickEditBtnFun()
+        this.afterClickEditBtnFun(row)
       } else {
         let df = this.dataForm
         if (df) {
