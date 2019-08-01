@@ -1,11 +1,12 @@
 <script>
-// import { setToken, getToken } from "../../utils/auth";
+import { getToken } from '../../utils/auth'
 export default {
   name: 'AuthRedirect',
   created() {
-    const token = decodeURIComponent(
-      window.location.search.replace('?token=', '')
-    )
+    // const token = decodeURIComponent(
+    //   window.location.search.replace('?token=', '')
+    // )
+    const token = getToken()
     // setToken(token);
     // console.log("回调", getToken());
     // const hash = window.location.search.slice(1);
@@ -16,6 +17,8 @@ export default {
     // } else {
     //   search = window.location.search;
     // }
+    debugger
+    console.log(token)
     let location
     if (window.opener) {
       location = window.opener.location

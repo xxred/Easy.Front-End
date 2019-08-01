@@ -41,27 +41,38 @@
           class="icon"
         /></span> 授权中心
     </div>
+    <div
+      class="sign-btn"
+      @click="handleClick('Bearer')"
+    >
+      <span class="github-svg-container">
+        <svg-icon
+          icon-class="github"
+          class="icon"
+        /></span> Bearer
+    </div>
   </div>
 </template>
 
 <script>
-import openWindow from "../../utils/openWindow";
-import store from "../../store";
-
+import openWindow from '../../utils/openWindow'
+// import store from '../../store'
+const baseUrl = 'https://localhost:44336'
 export default {
-  name: "SocialSignin",
+  name: 'SocialSignin',
   methods: {
     handleClick(thirdpart) {
-      const redirect_uri = encodeURIComponent("/auth-redirect");
+      const redirect_uri = encodeURIComponent('/auth-redirect')
       const url =
-        "/Admin/Account/Challenge?provider=" +
+        baseUrl +
+        '/Admin/Account/Challenge?provider=' +
         thirdpart +
-        "&returnUrl=" +
-        redirect_uri;
-      openWindow(url, thirdpart, 540, 540);
+        '&returnUrl=' +
+        redirect_uri
+      openWindow(url, thirdpart, 540, 540)
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
