@@ -9,13 +9,13 @@
     <el-form-item
       v-for="(column, idx) in columns"
       :key="idx"
-      :label="column.displayName"
-      :prop="column.name"
+      :label="column.DisplayName"
+      :prop="column.Name"
     >
 
       <el-switch
-        v-if="column.typeStr=='Boolean'"
-        v-model="temp[column.name]"
+        v-if="column.TypeStr=='Boolean'"
+        v-model="temp[column.Name]"
         style="display: block"
         active-color="#13ce66"
         inactive-color="#ff4949"
@@ -24,8 +24,8 @@
       />
 
       <el-date-picker
-        v-else-if="column.typeStr=='DateTime'"
-        v-model="temp[column.name]"
+        v-else-if="column.TypeStr=='DateTime'"
+        v-model="temp[column.Name]"
         type="datetime"
         format="yyyy-MM-dd HH:mm:ss"
         placeholder="选择日期时间"
@@ -33,9 +33,9 @@
 
       <el-input
         v-else
-        v-model="temp[column.name]"
+        v-model="temp[column.Name]"
         type="text"
-        :placeholder="'请输入'+column.displayName"
+        :placeholder="'请输入'+column.DisplayName"
       />
 
     </el-form-item>

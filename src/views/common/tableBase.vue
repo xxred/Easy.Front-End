@@ -29,14 +29,30 @@
     <el-table
       v-loading="listLoading"
       :data="dataList"
+      stripe
+      border
     >
       <slot name="tableColumns">
-        <el-table-column
-          v-for="(column, idx) in columns"
-          :key="idx"
-          :label="column.displayName"
-          :prop="column.name"
-        />
+        <template v-for="(column, idx) in columns">
+          <el-table-column
+            v-if="column.Length<=50"
+            :key="idx"
+            :label="column.DisplayName"
+            :prop="column.Name"
+          >
+            <template slot-scope="scope">
+              <template v-if="column.TypeStr=='Boolean'">
+                <el-switch
+                  :value="scope.row[column.Name]"
+                  style="display: block"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                />
+              </template>
+              <div v-else> {{scope.row[column.Name]}} </div>
+            </template>
+          </el-table-column>
+        </template>
       </slot>
 
       <slot name="tableActions">
@@ -178,7 +194,7 @@ export default {
     dataForm() {
       let formBase = this.$refs['formBase']
       if (!formBase) return null
-      let dataForm = formBase.$refs['formBase']
+      let dataForm = formBase.$refs['dataForm']
       if (!dataForm) {
         return null
       }
@@ -206,7 +222,7 @@ export default {
     },
     async getColumns() {
       var response = await getColumns(this.tableName)
-      this.cols = response.data.data
+      this.cols = response.data.Data
     },
     async getList() {
       this.listLoading = true
@@ -218,13 +234,10 @@ export default {
       }
       var response = await searchData(this.tableName, paper, {})
 
-      this.data = response.data.data
-      this.total = response.data.paper.totalCount
+      this.data = response.data.Data
+      this.total = response.data.Paper.TotalCount
 
-      // Just to simulate the time of the request
-      setTimeout(() => {
-        this.listLoading = false
-      }, 0.5 * 1000)
+      this.listLoading = false
     },
     handleCreate() {
       this.resetTemp()
@@ -233,12 +246,15 @@ export default {
       if (this.afterClickAddBtnFun) {
         this.afterClickAddBtnFun()
       } else {
-        let df = this.dataForm
-        if (df) {
-          this.$nextTick(() => {
-            df.clearValidate()
-          })
-        }
+        // 打开弹窗前，页面未初始化，因此延时执行
+        setTimeout(() => {
+          let df = this.dataForm
+          if (df) {
+            this.$nextTick(() => {
+              df.clearValidate()
+            })
+          }
+        }, 0.5 * 1000)
       }
     },
     handleDelete(row) {
@@ -272,12 +288,15 @@ export default {
       if (this.afterClickEditBtnFun) {
         this.afterClickEditBtnFun(row)
       } else {
-        let df = this.dataForm
-        if (df) {
-          this.$nextTick(() => {
-            df.clearValidate()
-          })
-        }
+        // 打开弹窗前，页面未初始化，因此延时执行
+        setTimeout(() => {
+          let df = this.dataForm
+          if (df) {
+            this.$nextTick(() => {
+              df.clearValidate()
+            })
+          }
+        }, 0.5 * 1000)
       }
     },
     resetTemp() {
@@ -295,7 +314,7 @@ export default {
           const tempData = Object.assign({}, this.temp)
           updateData(this.tableName, tempData).then(() => {
             for (const v of this.data) {
-              if (v.id === this.temp.id) {
+              if (v.ID === this.temp.ID) {
                 const index = this.data.indexOf(v)
                 this.data.splice(index, 1, this.temp)
                 break

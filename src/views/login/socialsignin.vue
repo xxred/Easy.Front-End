@@ -41,16 +41,6 @@
           class="icon"
         /></span> 授权中心
     </div>
-    <div
-      class="sign-btn"
-      @click="handleClick('Bearer')"
-    >
-      <span class="github-svg-container">
-        <svg-icon
-          icon-class="github"
-          class="icon"
-        /></span> Bearer
-    </div>
   </div>
 </template>
 
@@ -62,10 +52,9 @@ export default {
   name: 'SocialSignin',
   methods: {
     handleClick(thirdpart) {
-      debugger
       const redirect_uri = encodeURIComponent('/auth-redirect')
       const url =
-        '/api/Account/Challenge?provider=' +
+        'api/Account/Challenge?provider=' +
         thirdpart +
         '&returnUrl=' +
         redirect_uri

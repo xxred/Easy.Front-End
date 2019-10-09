@@ -5,7 +5,8 @@ function resolve(dir) {
 }
 
 // development、production。生产模式使用dist路径
-const publicPath = process.env.NODE_ENV === 'production' ? '/dist' : '/'
+// 不再做此设置，一切由服务端决定
+// const publicPath = process.env.NODE_ENV === 'production' ? '/dist' : '/'
 
 module.exports = {
   chainWebpack: config => {
@@ -22,12 +23,13 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
   },
-  configureWebpack: config => {},
+  // configureWebpack: config => {},
   devServer: {
     proxy: 'http://localhost:44336/',
     https: false
   },
-  publicPath: publicPath,
+  // outputDir: '../Easy.Admin/wwwroot/dist',
+  // publicPath: publicPath,
   // 导入vue包含编译器 https://cli.vuejs.org/zh/config/#runtimecompiler
   runtimeCompiler: true
 }

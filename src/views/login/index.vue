@@ -171,8 +171,6 @@ export default {
       })
     },
     afterQRScan() {
-      debugger
-      console.log('第三方登录回调')
       const vm = this
       const hash = window.location.hash.slice(1)
       // const hashObj = getQueryObject(hash);

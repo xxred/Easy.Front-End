@@ -10,8 +10,6 @@ const route = {
 
 export default settings => {
   settings.baseUrl = ''
-  // settings.baseUrl = 'https://localhost:44336'
-
   settings.login = login
   settings.route = route
   return settings
