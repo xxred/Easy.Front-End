@@ -58,10 +58,6 @@
         <span>账号 : admin</span>
         <span>密码 : admin</span>
       </div>
-      <div class="tips">
-        <span style="margin-right:18px;">账号 : editor</span>
-        <span>密码 : editor</span>
-      </div>
 
       <el-button
         class="thirdparty-button"
@@ -75,7 +71,6 @@
       :visible.sync="showDialog"
       append-to-body
     >
-      本地不能模拟，请结合自己业务进行模拟！！！
       <br>
       <br>
       <br>
@@ -87,12 +82,12 @@
 
 <script>
 import { isvalidUsername } from '../../utils/validate'
-import LangSelect from '../../components/LangSelect'
+// import LangSelect from '../../components/LangSelect'
 import SocialSign from './socialsignin'
 
 export default {
   name: 'Login',
-  components: { LangSelect, SocialSign },
+  components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
@@ -110,8 +105,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'Aa-123456'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [

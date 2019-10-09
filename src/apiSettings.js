@@ -1,7 +1,7 @@
 const login = {
-  loginByUsername: '/admin/account/login',
-  logout: '/admin/account/logout',
-  getUserInfo: '/admin/account'
+  loginByUsername: '/api/Account/Login',
+  logout: '/api/Account/Logout',
+  getUserInfo: '/api/Account/GetUserInfo'
 }
 
 const route = {

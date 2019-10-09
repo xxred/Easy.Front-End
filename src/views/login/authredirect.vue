@@ -1,4 +1,4 @@
-<script>
+﻿<script>
 import { getToken } from '../../utils/auth'
 export default {
   name: 'AuthRedirect',
@@ -8,7 +8,7 @@ export default {
     // )
     const token = getToken()
     // setToken(token);
-    // console.log("回调", getToken());
+    // console.log("å›žè°ƒ", getToken());
     // const hash = window.location.search.slice(1);
     // const hash = window.location.hash.replace("#/auth-redirect#", "");
 

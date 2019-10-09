@@ -57,15 +57,15 @@
 <script>
 import openWindow from '../../utils/openWindow'
 // import store from '../../store'
-const baseUrl = 'https://localhost:44336'
+
 export default {
   name: 'SocialSignin',
   methods: {
     handleClick(thirdpart) {
+      debugger
       const redirect_uri = encodeURIComponent('/auth-redirect')
       const url =
-        baseUrl +
-        '/Admin/Account/Challenge?provider=' +
+        '/api/Account/Challenge?provider=' +
         thirdpart +
         '&returnUrl=' +
         redirect_uri

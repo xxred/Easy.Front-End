@@ -24,7 +24,7 @@ module.exports = {
   },
   configureWebpack: config => {},
   devServer: {
-    proxy: 'https://localhost:44336/',
+    proxy: 'http://localhost:44336/',
     https: false
   },
   publicPath: publicPath,
