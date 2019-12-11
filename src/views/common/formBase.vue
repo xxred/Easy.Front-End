@@ -47,7 +47,7 @@
     <div slot="footer" class="dialog-footer">
       <slot name="dialogFooter">
         <div
-          style="position: fixed;margin:20px;float:right;bottom: 0px;right: 0px;"
+          style="position: fixed; margin:20px; float:right; bottom: 0px; right: 0px; z-index: 1;"
         >
           <el-button @click="returnIndex">取消</el-button>
           <el-button
@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       temp: {},
-      columns: {},
+      columns: null,
       textMap: {
         Edit: '编辑',
         Add: '新增'
@@ -94,9 +94,15 @@ export default {
     getColumns() {
       getColumns(this.tableName).then(res => {
         this.columns = res.data.Data
+        if (!this.id) {
+          this.dataLoading = false
+        }
       })
     },
     getData() {
+      if (!this.id) {
+        return
+      }
       queryData(this.tableName, this.id).then(res => {
         this.temp = res.data.Data
         this.dataLoading = false

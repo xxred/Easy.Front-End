@@ -94,7 +94,7 @@ function formatRoutes(routes) {
       },
       children: [
         {
-          path: '/:tableName/:type(Edit|Add)/:id',
+          path: `/:tableName(${router.name})/:type(Edit|Add)/:id?`,
           component: async resolve => {
             try {
               // 尝试加载模块
