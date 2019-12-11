@@ -14,7 +14,8 @@
           type="primary"
           icon="el-icon-search"
           @click="handleFilter"
-        >搜索</el-button>
+        >搜索</el-button
+        >
 
         <el-button
           class="filter-item"
@@ -22,26 +23,23 @@
           type="primary"
           icon="el-icon-edit"
           @click="handleCreate"
-        >新增</el-button>
+        >新增</el-button
+        >
       </slot>
     </div>
 
-    <el-table
-      v-loading="listLoading"
-      :data="dataList"
-      stripe
-      border
-    >
+    <el-table v-loading="listLoading" :data="dataList" stripe border>
       <slot name="tableColumns">
+        <el-table-column label="编号" type="index" />
         <template v-for="(column, idx) in columns">
           <el-table-column
-            v-if="column.Length<=50"
+            v-if="column.Length <= 50 && column.Name.toLowerCase() != 'id'"
             :key="idx"
             :label="column.DisplayName"
             :prop="column.Name"
           >
             <template slot-scope="scope">
-              <template v-if="column.TypeStr=='Boolean'">
+              <template v-if="column.TypeStr == 'Boolean'">
                 <el-switch
                   :value="scope.row[column.Name]"
                   style="display: block"
@@ -49,7 +47,7 @@
                   inactive-color="#ff4949"
                 />
               </template>
-              <div v-else> {{scope.row[column.Name]}} </div>
+              <div v-else>{{ scope.row[column.Name] }}</div>
             </template>
           </el-table-column>
         </template>
@@ -59,7 +57,7 @@
         <el-table-column
           label="操作"
           align="center"
-          width="230"
+          width="150"
           fixed="right"
           class-name="small-padding fixed-width"
         >
@@ -68,21 +66,22 @@
               type="primary"
               size="mini"
               @click="handleUpdate(scope.row)"
-            >编辑</el-button>
+            >编辑</el-button
+            >
             <el-button
               v-if="scope.row.status != 'deleted'"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-            >删除</el-button>
+            >删除</el-button
+            >
           </template>
         </el-table-column>
       </slot>
-
     </el-table>
     <slot name="page">
       <pagination
-        v-show="total>0"
+        v-show="total > 0"
         :total="total"
         :page.sync="listQuery.page"
         :limit.sync="listQuery.limit"
@@ -90,35 +89,21 @@
       />
     </slot>
 
-    <el-dialog
-      :title="textMap[dialogStatus]"
-      :visible.sync="dialogFormVisible"
-    >
-
-      <slot
-        name="formColumns"
-        :columns="columns"
-      >
-        <form-base
-          ref="formBase"
-          :columns="columns"
-          :temp="temp"
-        />
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+      <slot :columns="columns" name="formColumns">
+        <form-base ref="formBase" :columns="columns" :temp="temp" />
       </slot>
 
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
+      <div slot="footer" class="dialog-footer">
         <slot name="dialogFooter">
           <el-button @click="dialogFormVisible = false">取消</el-button>
           <el-button
             type="primary"
             @click="dialogStatus === 'create' ? createData() : updateData()"
-          >确认</el-button>
+          >确认</el-button
+          >
         </slot>
       </div>
-
     </el-dialog>
   </div>
 </template>
@@ -192,9 +177,9 @@ export default {
       return this.data
     },
     dataForm() {
-      let formBase = this.$refs['formBase']
+      const formBase = this.$refs['formBase']
       if (!formBase) return null
-      let dataForm = formBase.$refs['dataForm']
+      const dataForm = formBase.$refs['dataForm']
       if (!dataForm) {
         return null
       }
@@ -248,7 +233,7 @@ export default {
       } else {
         // 打开弹窗前，页面未初始化，因此延时执行
         setTimeout(() => {
-          let df = this.dataForm
+          const df = this.dataForm
           if (df) {
             this.$nextTick(() => {
               df.clearValidate()
@@ -290,7 +275,7 @@ export default {
       } else {
         // 打开弹窗前，页面未初始化，因此延时执行
         setTimeout(() => {
-          let df = this.dataForm
+          const df = this.dataForm
           if (df) {
             this.$nextTick(() => {
               df.clearValidate()
