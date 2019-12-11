@@ -28,12 +28,12 @@
             <el-table
               v-if="temp.ID"
               :data="tableData"
-              style="width: 100%;margin: 100px 0 70px 90px;"
-              row-key="ID"
               :tree-props="{
                 children: 'Childs',
                 hasChildren: 'hasChildren'
               }"
+              style="width: 100%;margin: 100px 0 70px 90px;"
+              row-key="ID"
               border
               default-expand-all
             >
@@ -134,6 +134,9 @@ export default {
     },
     type() {
       return this.$route.params.type
+    },
+    isAdd() {
+      return this.type === 'Add'
     }
   },
   created() {
@@ -174,7 +177,7 @@ export default {
       }
     },
     getData() {
-      if (!this.id) {
+      if (this.isAdd) {
         this.dataLoading = false
         return
       }
@@ -185,7 +188,7 @@ export default {
       })
     },
     getAllMenu() {
-      if (!this.id) {
+      if (this.isAdd) {
         return
       }
       this.$axios.get('/api/Menu/GetAllMenu').then(res => {
@@ -204,7 +207,7 @@ export default {
       // console.log(this.item)
       this.temp.Resources.map(i => {
         this.checkCount.map(j => {
-          var week = j & this.item.Permissions[i]
+          var week = j & this.temp.Permissions[i]
           var weekstring = week.toString()
           if (week != 0) {
             // this.checkList['pf'+i+'_'+weekstring] = true;

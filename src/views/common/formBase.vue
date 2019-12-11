@@ -84,6 +84,9 @@ export default {
     },
     type() {
       return this.$route.params.type
+    },
+    isAdd() {
+      return this.type === 'Add'
     }
   },
   created() {
@@ -94,13 +97,13 @@ export default {
     getColumns() {
       getColumns(this.tableName).then(res => {
         this.columns = res.data.Data
-        if (!this.id) {
+        if (this.isAdd) {
           this.dataLoading = false
         }
       })
     },
     getData() {
-      if (!this.id) {
+      if (this.isAdd) {
         return
       }
       queryData(this.tableName, this.id).then(res => {
