@@ -48,32 +48,11 @@
               </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <span v-if="scope.row.Permissions['1']">
+                  <span v-for="(item, k) in scope.row.Permissions" :key="k">
                     <el-checkbox
-                      v-model="checkList['pf' + scope.row.ID + '_1']"
-                      label="1"
-                    >查看</el-checkbox
-                    >
-                  </span>
-                  <span v-if="scope.row.Permissions['2']">
-                    <el-checkbox
-                      v-model="checkList['pf' + scope.row.ID + '_2']"
-                      label="2"
-                    >添加</el-checkbox
-                    >
-                  </span>
-                  <span v-if="scope.row.Permissions['4']">
-                    <el-checkbox
-                      v-model="checkList['pf' + scope.row.ID + '_4']"
-                      label="4"
-                    >修改</el-checkbox
-                    >
-                  </span>
-                  <span v-if="scope.row.Permissions['8']">
-                    <el-checkbox
-                      v-model="checkList['pf' + scope.row.ID + '_8']"
-                      label="8"
-                    >删除</el-checkbox
+                      :label="k"
+                      v-model="checkList['pf' + scope.row.ID + '_' + k]"
+                    >{{ item }}</el-checkbox
                     >
                   </span>
                 </template>
@@ -96,7 +75,7 @@
 </template>
 
 <script>
-import { createData, updateData, queryData, getColumns } from '../../api/base'
+import { createData, updateData, queryData } from '../../api/base'
 
 export default {
   // name: 'index',
@@ -116,7 +95,6 @@ export default {
       tableData: [],
       roleList: [],
       datasearch: {},
-      url: '/api/Role',
       method: { Edit: 'put', Add: 'post' },
       textMap: {
         Edit: '编辑',
@@ -152,26 +130,23 @@ export default {
         // 编辑
         this.checkList.ID = this.temp.ID
         this.checkList.Name = this.temp.Name
-        this.$axios[this.method[this.type]](this.url, this.checkList).then(
-          res => {
-            if (res.data.Status == 0) {
-              this.$message.success('操作成功')
-              this.returnIndex()
-            }
+        this.checkList.Remark = this.temp.Remark
+        updateData(this.tableName, this.checkList).then(res => {
+          if (res.data.Status === 0) {
+            this.$message.success('操作成功')
+            this.returnIndex()
           }
-        )
+        })
       } else {
         // 新增
         this.$refs[formName].validate(valid => {
           if (valid) {
-            this.$axios[this.method[this.type]](this.url, this.temp).then(
-              res => {
-                if (res.data.Status == 0) {
-                  this.$message.success('操作成功')
-                  this.returnIndex()
-                }
+            createData(this.tableName, this.temp).then(res => {
+              if (res.data.Status === 0) {
+                this.$message.success('操作成功')
+                this.returnIndex()
               }
-            )
+            })
           }
         })
       }
@@ -209,7 +184,7 @@ export default {
         this.checkCount.map(j => {
           var week = j & this.temp.Permissions[i]
           var weekstring = week.toString()
-          if (week != 0) {
+          if (week !== 0) {
             // this.checkList['pf'+i+'_'+weekstring] = true;
             this.$set(this.checkList, 'pf' + i + '_' + weekstring, true)
           }
