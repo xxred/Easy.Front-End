@@ -1,6 +1,9 @@
 import { asyncRouterMap, constantRouterMap } from '../../router'
 import { getRoutes } from '../../api/route'
 
+// 添加/编辑页的路由，不需要加到菜单显示
+const addRouters = []
+
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param roles
@@ -82,6 +85,34 @@ function formatRoutes(routes) {
     router.children = children
 
     fmRoutes.push(router)
+
+    // 添加/编辑页路由
+    const r = {
+      path: router.path,
+      component: resolve => {
+        require(['@/views/layout/Layout.vue'], resolve)
+      },
+      children: [
+        {
+          path: '/:tableName/:type(Edit|Add)/:id',
+          component: async resolve => {
+            try {
+              // 尝试加载模块
+              await require(['@/views/' + router.name + '/form.vue'], resolve)
+            } catch {
+              // 加载失败，不存在此模块，使用默认模板
+              console.log(
+                '@/views/' + router.name + '/form.vue不存在，加载默认模板'
+              )
+              resolve({
+                template: `<form-base />`
+              })
+            }
+          }
+        }
+      ]
+    }
+    addRouters.push(r)
   })
 
   return fmRoutes
@@ -98,6 +129,9 @@ const permission = {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
       state.routers = constantRouterMap.concat(routers)
+    },
+    ADD_ROUTERS: (state, routers) => {
+      state.addRouters = state.addRouters.concat(routers)
     }
   },
   actions: {
@@ -113,6 +147,7 @@ const permission = {
           accessedRouters = filterAsyncRouter(asyncRouters, roles)
         }
         commit('SET_ROUTERS', accessedRouters)
+        commit('ADD_ROUTERS', addRouters)
         resolve()
       })
     }

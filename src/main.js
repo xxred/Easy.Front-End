@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Storage from './utils/storage'
+import Request from './utils/request'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
@@ -32,6 +33,7 @@ Vue.use(Element, {
 
 // 注册全局table基础组件
 Vue.component('table-base', () => import('./views/common/tableBase.vue'))
+Vue.component('form-base', () => import('./views/common/formBase.vue'))
 
 // // register global utility filters.
 // Object.keys(filters).forEach(key => {
@@ -39,6 +41,7 @@ Vue.component('table-base', () => import('./views/common/tableBase.vue'))
 // })
 
 Vue.config.productionTip = false
+Vue.prototype.$axios = Request
 
 new Vue({
   router,

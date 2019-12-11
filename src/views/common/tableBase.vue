@@ -116,11 +116,10 @@ import {
   getColumns
 } from '../../api/base'
 import Pagination from '../../components/Pagination' // Secondary package based on el-pagination
-import FormBase from './formBase'
 
 export default {
   name: 'TableBase',
-  components: { Pagination, FormBase },
+  components: { Pagination },
   props: {
     tableData: Array,
     tableColumns: Array,
@@ -225,22 +224,8 @@ export default {
       this.listLoading = false
     },
     handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      if (this.afterClickAddBtnFun) {
-        this.afterClickAddBtnFun()
-      } else {
-        // 打开弹窗前，页面未初始化，因此延时执行
-        setTimeout(() => {
-          const df = this.dataForm
-          if (df) {
-            this.$nextTick(() => {
-              df.clearValidate()
-            })
-          }
-        }, 0.5 * 1000)
-      }
+      const path = `/${this.tableName}/Add`
+      this.$router.push({ path: path })
     },
     handleDelete(row) {
       this.$confirm('此操作将删除该记录, 是否继续?', '提示', {
@@ -267,22 +252,8 @@ export default {
       this.getList()
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      if (this.afterClickEditBtnFun) {
-        this.afterClickEditBtnFun(row)
-      } else {
-        // 打开弹窗前，页面未初始化，因此延时执行
-        setTimeout(() => {
-          const df = this.dataForm
-          if (df) {
-            this.$nextTick(() => {
-              df.clearValidate()
-            })
-          }
-        }, 0.5 * 1000)
-      }
+      const path = `/${this.tableName}/Edit/${row.ID}`
+      this.$router.push({ path: path })
     },
     resetTemp() {
       this.temp = {}
