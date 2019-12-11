@@ -252,7 +252,13 @@ export default {
       this.getList()
     },
     handleUpdate(row) {
-      const path = `/${this.tableName}/Edit/${row.ID}`
+      let id
+      if (typeof row.ID !== 'undefined') {
+        id = row.ID
+      } else {
+        id = row.Id
+      }
+      const path = `/${this.tableName}/Edit/${id}`
       this.$router.push({ path: path })
     },
     resetTemp() {
