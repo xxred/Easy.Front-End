@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h2>{{ textMap[type] }}</h2>
+    <h2 style="margin-left: 20px;">{{ textMap[type] }}</h2>
     <slot :columns="columns" name="formColumns">
       <el-form
         ref="dataForm"
         :model="temp"
         label-position="left"
         label-width="120px"
-        style="width: 400px; margin-left:50px;"
+        style="width: 400px; margin-left: 50px; margin-bottom: 75px;"
       >
         <template v-for="(column, idx) in columns">
           <el-form-item
@@ -46,12 +46,16 @@
     </slot>
     <div slot="footer" class="dialog-footer">
       <slot name="dialogFooter">
-        <el-button @click="returnIndex">取消</el-button>
-        <el-button
-          type="primary"
-          @click="type === 'Add' ? createData() : updateData()"
-        >确认</el-button
+        <div
+          style="position: fixed;margin:20px;float:right;bottom: 0px;right: 0px;"
         >
+          <el-button @click="returnIndex">取消</el-button>
+          <el-button
+            type="primary"
+            @click="type === 'Add' ? createData() : updateData()"
+          >确认</el-button
+          >
+        </div>
       </slot>
     </div>
   </div>
@@ -67,7 +71,8 @@ export default {
       textMap: {
         Edit: '编辑',
         Add: '新增'
-      }
+      },
+      dataLoading: true
     }
   },
   computed: {
@@ -94,6 +99,7 @@ export default {
     getData() {
       queryData(this.tableName, this.id).then(res => {
         this.temp = res.data.Data
+        this.dataLoading = false
       })
     },
     createData() {
