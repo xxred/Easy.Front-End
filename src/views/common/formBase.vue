@@ -1,7 +1,14 @@
 <template>
   <div>
-    <h2 style="margin-left: 20px;">{{ textMap[type] }}</h2>
-    <slot :columns="columns" name="formColumns">
+    <slot name="formHead">
+      <h2 style="margin-left: 20px;">{{ textMap[type] }}</h2>
+    </slot>
+    <slot
+      :columns="columns"
+      :temp="temp"
+      :refDataForm="refDataForm"
+      name="formColumns"
+    >
       <el-form
         ref="dataForm"
         :model="temp"
@@ -72,7 +79,8 @@ export default {
         Edit: '编辑',
         Add: '新增'
       },
-      dataLoading: true
+      dataLoading: true,
+      refDataForm: {}
     }
   },
   computed: {
@@ -94,6 +102,14 @@ export default {
     this.getData()
   },
   methods: {
+    getDataForm() {
+      if (this.refDataForm.dataForm) {
+        return this.refDataForm.dataForm
+      }
+      if (this.$refs.dataForm) {
+        return this.$refs.dataForm
+      }
+    },
     getColumns() {
       getColumns(this.tableName).then(res => {
         this.columns = res.data.Data
@@ -112,7 +128,7 @@ export default {
       })
     },
     createData() {
-      this.$refs.dataForm.validate(valid => {
+      this.getDataForm().validate(valid => {
         if (valid) {
           createData(this.tableName, this.temp).then(() => {
             this.$notify({
@@ -127,7 +143,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs.dataForm.validate(valid => {
+      this.getDataForm().validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           updateData(this.tableName, tempData).then(() => {

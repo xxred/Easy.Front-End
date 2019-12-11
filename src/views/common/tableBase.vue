@@ -14,7 +14,7 @@
           type="primary"
           icon="el-icon-search"
           @click="handleFilter"
-        >搜索</el-button
+          >搜索</el-button
         >
 
         <el-button
@@ -23,7 +23,7 @@
           type="primary"
           icon="el-icon-edit"
           @click="handleCreate"
-        >新增</el-button
+          >新增</el-button
         >
       </slot>
     </div>
@@ -66,14 +66,14 @@
               type="primary"
               size="mini"
               @click="handleUpdate(scope.row)"
-            >编辑</el-button
+              >编辑</el-button
             >
             <el-button
               v-if="scope.row.status != 'deleted'"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-            >删除</el-button
+              >删除</el-button
             >
           </template>
         </el-table-column>
@@ -88,23 +88,6 @@
         @pagination="getList"
       />
     </slot>
-
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <slot :columns="columns" name="formColumns">
-        <form-base ref="formBase" :columns="columns" :temp="temp" />
-      </slot>
-
-      <div slot="footer" class="dialog-footer">
-        <slot name="dialogFooter">
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="dialogStatus === 'create' ? createData() : updateData()"
-          >确认</el-button
-          >
-        </slot>
-      </div>
-    </el-dialog>
   </div>
 </template>
 <script>
@@ -123,9 +106,7 @@ export default {
   props: {
     tableData: Array,
     tableColumns: Array,
-    tableName: String,
-    afterClickAddBtnFun: Function,
-    afterClickEditBtnFun: Function
+    tableName: String
   },
   data() {
     return {
@@ -223,6 +204,15 @@ export default {
 
       this.listLoading = false
     },
+    getId(row) {
+      let id
+      if (typeof row.ID !== 'undefined') {
+        id = row.ID
+      } else {
+        id = row.Id
+      }
+      return id
+    },
     handleCreate() {
       const path = `/${this.tableName}/Add`
       this.$router.push({ path: path })
@@ -234,7 +224,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          deletData(this.tableName, row.id).then(() => {
+          deletData(this.tableName, this.getId(row)).then(() => {
             this.$notify({
               title: '成功',
               message: '删除成功',
@@ -252,13 +242,7 @@ export default {
       this.getList()
     },
     handleUpdate(row) {
-      let id
-      if (typeof row.ID !== 'undefined') {
-        id = row.ID
-      } else {
-        id = row.Id
-      }
-      const path = `/${this.tableName}/Edit/${id}`
+      const path = `/${this.tableName}/Edit/${this.getId(row)}`
       this.$router.push({ path: path })
     },
     resetTemp() {
