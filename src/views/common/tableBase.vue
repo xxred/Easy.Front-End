@@ -7,6 +7,7 @@
           placeholder="请输入关键字"
           style="width: 200px;margin-right: 10px;"
           class="filter-item"
+          @keyup.enter.native="handleFilter"
         />
 
         <el-button
@@ -14,7 +15,7 @@
           type="primary"
           icon="el-icon-search"
           @click="handleFilter"
-          >搜索</el-button
+        >搜索</el-button
         >
 
         <el-button
@@ -23,7 +24,7 @@
           type="primary"
           icon="el-icon-edit"
           @click="handleCreate"
-          >新增</el-button
+        >新增</el-button
         >
       </slot>
     </div>
@@ -66,14 +67,14 @@
               type="primary"
               size="mini"
               @click="handleUpdate(scope.row)"
-              >编辑</el-button
+            >编辑</el-button
             >
             <el-button
               v-if="scope.row.status != 'deleted'"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-              >删除</el-button
+            >删除</el-button
             >
           </template>
         </el-table-column>
@@ -195,7 +196,8 @@ export default {
         orderBy: this.listQuery.sort,
         pageIndex: this.listQuery.page,
         pageSize: this.listQuery.limit,
-        retrieveTotalCount: true
+        retrieveTotalCount: true,
+        key: this.listQuery.title
       }
       var response = await searchData(this.tableName, paper, {})
 
