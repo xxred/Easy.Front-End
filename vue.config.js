@@ -24,10 +24,10 @@ module.exports = {
       })
   },
   // configureWebpack: config => {},
-  devServer: {
-    proxy: 'http://localhost:44336/',
-    https: false
-  },
+  // devServer: {
+  //   proxy: 'http://localhost:44336/',
+  //   https: false
+  // },
   // outputDir: '../Easy.Admin/wwwroot/dist',
   // publicPath: publicPath,
   // 导入vue包含编译器 https://cli.vuejs.org/zh/config/#runtimecompiler
