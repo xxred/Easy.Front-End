@@ -1,13 +1,14 @@
 {
   "name": "@xxred/easy-front-end",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "scripts": {
     "dev": "vue-cli-service serve --port=1337",
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
-  "description": "Easy.Front-End",
+  "repository": "https://github.com/xxred/Easy.Front-End",
+  "description": "Easy.Front-End,Admin,Back-end",
   "author": {
     "name": "xxred"
   },
