@@ -68,11 +68,19 @@ function formatRoutes(routes) {
           // 尝试加载模块
           await require(['@/views/' + component + '.vue'], resolve)
         } catch {
-          // 加载失败，不存在此模块，使用默认模板
-          console.log('@/views/' + component + '.vue不存在，加载默认模板')
-          resolve({
-            template: `<table-base table-name="${router.name}" />`
-          })
+          // 加载失败，不存在此模块，尝试加载本项目的视图
+          try {
+            // 尝试加载模块
+            await require(['../../views/' + component + '.vue'], resolve)
+          } catch {
+            // 加载失败，不存在此模块，使用默认模板
+            console.log(
+              '(@|../..)/views/' + component + '.vue不存在，加载默认模板'
+            )
+            resolve({
+              template: `<table-base table-name="${router.name}" />`
+            })
+          }
         }
       }
     }
@@ -101,12 +109,19 @@ function formatRoutes(routes) {
               await require(['@/views/' + router.name + '/form.vue'], resolve)
             } catch {
               // 加载失败，不存在此模块，使用默认模板
-              console.log(
-                '@/views/' + router.name + '/form.vue不存在，加载默认模板'
-              )
-              resolve({
-                template: `<form-base />`
-              })
+              // 如果本项目被引用，尝试加载本项目已有视图
+              // console.log(
+              //   '@/views/' + router.name + '/form.vue不存在，加载默认模板'
+              // )
+              try {
+                await require([
+                  '../../views/' + router.name + '/form.vue'
+                ], resolve)
+              } catch {
+                resolve({
+                  template: `<form-base />`
+                })
+              }
             }
           }
         }
