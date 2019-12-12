@@ -1,6 +1,6 @@
 name: Easy.Front-End
 
-on: [push]
+on: [create]
 
 jobs:
   build:
