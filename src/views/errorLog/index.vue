@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import errorA from './errorTestA'
-import errorB from './errorTestB'
+import errorA from 'src/views/errorLog/errorTestA'
+import errorB from 'src/views/errorLog/errorTestB'
 
 export default {
   name: 'ErrorLog',

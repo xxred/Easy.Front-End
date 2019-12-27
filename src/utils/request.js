@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
-import store from '../store'
+import store from 'src/store'
 
 // create an axios instance
 const service = axios.create({
@@ -64,6 +64,10 @@ service.interceptors.response.use(
         // 如果已弹窗，不重复弹窗
         if (!isLoginTimeout) {
           isLoginTimeout = true
+          // 如果当前就是login、页面则不作处理
+          if (location.pathname.indexOf('/login') > 0) {
+            return response
+          }
           MessageBox.confirm(
             '你已被登出或者登陆失效，可以取消继续留在该页面，或者重新登录',
             '确定登出',

@@ -1,4 +1,4 @@
-import Storage from '../../utils/storage'
+import Storage from 'src/utils/storage'
 
 const app = {
   state: {

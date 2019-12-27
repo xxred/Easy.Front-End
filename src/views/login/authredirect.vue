@@ -1,5 +1,5 @@
 ﻿<script>
-// import { setToken, getToken } from "../../utils/auth";
+// import { setToken, getToken } from "src/utils/auth";
 export default {
   name: 'AuthRedirect',
   created() {

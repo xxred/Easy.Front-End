@@ -15,8 +15,7 @@
           type="primary"
           icon="el-icon-search"
           @click="handleFilter"
-        >搜索</el-button
-        >
+        >搜索</el-button>
 
         <el-button
           class="filter-item"
@@ -24,14 +23,21 @@
           type="primary"
           icon="el-icon-edit"
           @click="handleCreate"
-        >新增</el-button
-        >
+        >新增</el-button>
       </slot>
     </div>
 
-    <el-table v-loading="listLoading" :data="dataList" stripe border>
+    <el-table
+      v-loading="listLoading"
+      :data="dataList"
+      stripe
+      border
+    >
       <slot name="tableColumns">
-        <el-table-column label="编号" type="index" />
+        <el-table-column
+          label="编号"
+          type="index"
+        />
         <template v-for="(column, idx) in columns">
           <el-table-column
             v-if="column.Length <= 50 && column.Name.toLowerCase() != 'id'"
@@ -67,15 +73,13 @@
               type="primary"
               size="mini"
               @click="handleUpdate(scope.row)"
-            >编辑</el-button
-            >
+            >编辑</el-button>
             <el-button
               v-if="scope.row.status != 'deleted'"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-            >删除</el-button
-            >
+            >删除</el-button>
           </template>
         </el-table-column>
       </slot>
@@ -98,8 +102,8 @@ import {
   updateData,
   deletData,
   getColumns
-} from '../../api/base'
-import Pagination from '../../components/Pagination' // Secondary package based on el-pagination
+} from 'src/api/base'
+import Pagination from 'src/components/Pagination' // Secondary package based on el-pagination
 
 export default {
   name: 'TableBase',

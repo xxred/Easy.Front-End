@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import openWindow from '../../utils/openWindow'
-// import store from '../../store'
+import openWindow from 'src/utils/openWindow'
+// import store from 'src/store'
 
 export default {
   name: 'SocialSignin',

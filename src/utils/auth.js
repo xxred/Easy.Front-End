@@ -1,4 +1,4 @@
-import Storage from './storage'
+import Storage from 'src/utils/storage'
 
 const TokenKey = 'Admin-Token'
 

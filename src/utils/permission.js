@@ -1,4 +1,4 @@
-import store from '../store'
+import store from 'src/store'
 
 /**
  * @param {Array} value

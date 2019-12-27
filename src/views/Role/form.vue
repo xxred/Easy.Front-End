@@ -1,5 +1,8 @@
 <template>
-  <div v-loading="dataLoading" class="detail">
+  <div
+    v-loading="dataLoading"
+    class="detail"
+  >
     <h2 style="margin-left: 20px;">{{ textMap[type] }}</h2>
     <div class="con-box">
       <div class="add">
@@ -12,12 +15,18 @@
             size="mini"
           >
             <div class="form-box">
-              <el-form-item label="名称" prop="Name">
+              <el-form-item
+                label="名称"
+                prop="Name"
+              >
                 <el-col :span="20">
                   <el-input v-model="temp.Name" />
                 </el-col>
               </el-form-item>
-              <el-form-item label="说明" prop="Remark">
+              <el-form-item
+                label="说明"
+                prop="Remark"
+              >
                 <el-col :span="20">
                   <el-input v-model="temp.Remark" />
                 </el-col>
@@ -38,8 +47,15 @@
               default-expand-all
             >
               >
-              <el-table-column prop="DisplayName" label="名称" width="180" />
-              <el-table-column label="授权" width="60">
+              <el-table-column
+                prop="DisplayName"
+                label="名称"
+                width="180"
+              />
+              <el-table-column
+                label="授权"
+                width="60"
+              >
                 <template slot-scope="scope">
                   <span v-if="scope.row.ParentID != 0">
                     <el-checkbox v-model="checkList['p' + scope.row.ID]" />
@@ -48,12 +64,14 @@
               </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <span v-for="(item, k) in scope.row.Permissions" :key="k">
+                  <span
+                    v-for="(item, k) in scope.row.Permissions"
+                    :key="k"
+                  >
                     <el-checkbox
                       :label="k"
                       v-model="checkList['pf' + scope.row.ID + '_' + k]"
-                    >{{ item }}</el-checkbox
-                    >
+                    >{{ item }}</el-checkbox>
                   </span>
                 </template>
               </el-table-column>
@@ -63,11 +81,12 @@
       </div>
 
       <div class="foot-btn">
-        <div
-          style="position: fixed;margin:20px;float:right;bottom: 0px;right: 0px;z-index: 1;"
-        >
+        <div style="position: fixed;margin:20px;float:right;bottom: 0px;right: 0px;z-index: 1;">
           <el-button @click="returnIndex">取消</el-button>
-          <el-button type="primary" @click="onSubmit('form')">确认</el-button>
+          <el-button
+            type="primary"
+            @click="onSubmit('form')"
+          >确认</el-button>
         </div>
       </div>
     </div>
@@ -75,7 +94,7 @@
 </template>
 
 <script>
-import { createData, updateData, queryData } from '../../api/base'
+import { createData, updateData, queryData } from 'src/api/base'
 
 export default {
   // name: 'index',

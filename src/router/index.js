@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-const Layout = () => import('../views/layout/Layout')
+const Layout = () => import('src/views/layout/Layout')
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -32,28 +32,28 @@ export const constantRouterMap = [
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('../views/redirect/index')
+        component: () => import('src/views/redirect/index')
       }
     ]
   },
   {
     path: '/login',
-    component: () => import('../views/login/index'),
+    component: () => import('src/views/login/index'),
     hidden: true
   },
   {
     path: '/auth-redirect',
-    component: () => import('../views/login/authredirect'),
+    component: () => import('src/views/login/authredirect'),
     hidden: true
   },
   {
     path: '/404',
-    component: () => import('../views/errorPage/404'),
+    component: () => import('src/views/errorPage/404'),
     hidden: true
   },
   {
     path: '/401',
-    component: () => import('../views/errorPage/401'),
+    component: () => import('src/views/errorPage/401'),
     hidden: true
   },
   {
@@ -63,7 +63,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('../views/dashboard/index'),
+        component: () => import('src/views/dashboard/index'),
         name: 'Dashboard',
         meta: {
           title: '首页',
@@ -80,7 +80,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'index',
-        component: () => import('../views/guide/index'),
+        component: () => import('src/views/guide/index'),
         name: 'Guide',
         meta: {
           title: '引导页',
@@ -108,7 +108,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'log',
-        component: () => import('../views/errorLog/index'),
+        component: () => import('src/views/errorLog/index'),
         name: 'ErrorLog',
         meta: {
           title: 'errorLog',

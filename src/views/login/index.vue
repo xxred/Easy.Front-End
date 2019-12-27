@@ -67,8 +67,8 @@
     </el-form>
 
     <el-dialog
-      title="第三方登录"
       :visible.sync="showDialog"
+      title="第三方登录"
       append-to-body
     >
       <br>
@@ -81,9 +81,9 @@
 </template>
 
 <script>
-import { isvalidUsername } from '../../utils/validate'
-// import LangSelect from '../../components/LangSelect'
-import SocialSign from './socialsignin'
+import { isvalidUsername } from 'src/utils/validate'
+// import LangSelect from 'src/components/LangSelect'
+import SocialSign from 'src/views/login/socialsignin'
 
 export default {
   name: 'Login',

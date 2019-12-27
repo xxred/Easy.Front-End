@@ -1,4 +1,4 @@
-export { default as Navbar } from './Navbar'
-export { default as Sidebar } from './Sidebar/index.vue'
-export { default as TagsView } from './TagsView'
-export { default as AppMain } from './AppMain'
+export { default as Navbar } from 'src/views/layout/components/Navbar'
+export { default as Sidebar } from 'src/views/layout/components/Sidebar/index.vue'
+export { default as TagsView } from 'src/views/layout/components/TagsView'
+export { default as AppMain } from 'src/views/layout/components/AppMain'

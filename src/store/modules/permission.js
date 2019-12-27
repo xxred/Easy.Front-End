@@ -1,5 +1,5 @@
-import { asyncRouterMap, constantRouterMap } from '../../router'
-import { getRoutes } from '../../api/route'
+import { asyncRouterMap, constantRouterMap } from 'src/router'
+import { getRoutes } from 'src/api/route'
 
 // 添加/编辑页的路由，不需要加到菜单显示
 const addRouters = []
@@ -52,8 +52,8 @@ function formatRoutes(routes) {
       router.component = resolve => {
         // 动态加载组件会编译加载项目所有组件
         // 这里不能全写变量，写开头确定起始地址，写结尾确定文件名
-        // 这样就相当于编译'@/**/*.vue'，编译之后模块列表才会有所有的模块，传模块路径匹配才会命中
-        require(['@/' + component + '.vue'], resolve)
+        // 这样就相当于编译'src/**/*.vue'，编译之后模块列表才会有所有的模块，传模块路径匹配才会命中
+        require(['src/' + component + '.vue'], resolve)
       }
     } else if (router.template) {
       router.component = resolve => {
@@ -64,23 +64,18 @@ function formatRoutes(routes) {
     } else {
       const component = `${router.name}/index`
       router.component = async resolve => {
+        // 加载失败，不存在此模块，尝试加载本项目的视图
         try {
           // 尝试加载模块
-          await require(['@/views/' + component + '.vue'], resolve)
+          await require(['src/views/' + component + '.vue'], resolve)
         } catch {
-          // 加载失败，不存在此模块，尝试加载本项目的视图
-          try {
-            // 尝试加载模块
-            await require(['../../views/' + component + '.vue'], resolve)
-          } catch {
-            // 加载失败，不存在此模块，使用默认模板
-            console.log(
-              '(@|../..)/views/' + component + '.vue不存在，加载默认模板'
-            )
-            resolve({
-              template: `<table-base table-name="${router.name}" />`
-            })
-          }
+          // 加载失败，不存在此模块，使用默认模板
+          console.log(
+            '(@|../..)/views/' + component + '.vue不存在，加载默认模板'
+          )
+          resolve({
+            template: `<table-base table-name="${router.name}" />`
+          })
         }
       }
     }
@@ -98,7 +93,7 @@ function formatRoutes(routes) {
     const r = {
       path: router.path,
       component: resolve => {
-        require(['@/views/layout/Layout.vue'], resolve)
+        require(['src/views/layout/Layout.vue'], resolve)
       },
       children: [
         {
@@ -106,16 +101,16 @@ function formatRoutes(routes) {
           component: async resolve => {
             try {
               // 尝试加载模块
-              await require(['@/views/' + router.name + '/form.vue'], resolve)
+              await require(['src/views/' + router.name + '/form.vue'], resolve)
             } catch {
               // 加载失败，不存在此模块，使用默认模板
               // 如果本项目被引用，尝试加载本项目已有视图
               // console.log(
-              //   '@/views/' + router.name + '/form.vue不存在，加载默认模板'
+              //   'src/views/' + router.name + '/form.vue不存在，加载默认模板'
               // )
               try {
                 await require([
-                  '../../views/' + router.name + '/form.vue'
+                  'src/views/' + router.name + '/form.vue'
                 ], resolve)
               } catch {
                 resolve({

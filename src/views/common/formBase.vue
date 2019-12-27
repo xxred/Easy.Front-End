@@ -51,24 +51,24 @@
         </template>
       </el-form>
     </slot>
-    <div slot="footer" class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <slot name="dialogFooter">
-        <div
-          style="position: fixed; margin:20px; float:right; bottom: 0px; right: 0px; z-index: 1;"
-        >
+        <div style="position: fixed; margin:20px; float:right; bottom: 0px; right: 0px; z-index: 1;">
           <el-button @click="returnIndex">取消</el-button>
           <el-button
             type="primary"
             @click="type === 'Add' ? createData() : updateData()"
-          >确认</el-button
-          >
+          >确认</el-button>
         </div>
       </slot>
     </div>
   </div>
 </template>
 <script>
-import { createData, updateData, queryData, getColumns } from '../../api/base'
+import { createData, updateData, queryData, getColumns } from 'src/api/base'
 export default {
   name: 'FormBase',
   data() {

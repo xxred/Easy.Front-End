@@ -22,6 +22,9 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
+
+    // 配置模块搜索目录
+    config.resolve.modules.add(resolve('./'))
   },
   // configureWebpack: config => {},
   // devServer: {
