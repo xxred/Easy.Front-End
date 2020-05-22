@@ -9,11 +9,7 @@ const route = {
 }
 
 export default settings => {
-  settings.baseUrl =
-    // ''
-    // 'http://ids4.hebinghong.com'
-    'http://ids4.winoble.cn'
-
+  settings.baseUrl = ''
   // 'http://localhost:44336'
   settings.login = login
   settings.route = route
