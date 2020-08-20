@@ -1,5 +1,5 @@
 <template>
-  <table-base :table-name="tableName" ref="tableBase">
+  <table-base ref="tableBase" :table-name="tableName">
     <template slot="tableColumns">
       <el-table-column label="编号" type="index" />
       <el-table-column label="菜单名" prop="Name" />

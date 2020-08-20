@@ -8,7 +8,7 @@
         <svg-icon
           icon-class="wechat"
           class="icon"
-        /></span> 微信
+      /></span> 微信
     </div>
     <div
       class="sign-btn"
@@ -18,7 +18,7 @@
         <svg-icon
           icon-class="qq"
           class="icon"
-        /></span> QQ
+      /></span> QQ
     </div>
 
     <div
@@ -29,7 +29,7 @@
         <svg-icon
           icon-class="github"
           class="icon"
-        /></span> Github
+      /></span> Github
     </div>
     <div
       class="sign-btn"
@@ -39,7 +39,7 @@
         <svg-icon
           icon-class="github"
           class="icon"
-        /></span> 授权中心
+      /></span> 授权中心
     </div>
   </div>
 </template>
