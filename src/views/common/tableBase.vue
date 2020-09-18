@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <slot name="filter">
+      <slot :listQuery="listQuery" :handleFilter="handleFilter" name="filter">
         <el-input
           v-model="listQuery.title"
           placeholder="请输入关键字"
@@ -15,7 +15,8 @@
           type="primary"
           icon="el-icon-search"
           @click="handleFilter"
-        >搜索</el-button>
+        >搜索</el-button
+        >
 
         <el-button
           class="filter-item"
@@ -23,21 +24,14 @@
           type="primary"
           icon="el-icon-edit"
           @click="handleCreate"
-        >新增</el-button>
+        >新增</el-button
+        >
       </slot>
     </div>
 
-    <el-table
-      v-loading="listLoading"
-      :data="dataList"
-      stripe
-      border
-    >
-      <slot name="tableColumns">
-        <el-table-column
-          label="编号"
-          type="index"
-        />
+    <el-table v-loading="listLoading" :data="dataList" stripe border>
+      <slot :columns="columns" name="tableColumns">
+        <el-table-column label="编号" type="index" />
         <template v-for="(column, idx) in columns">
           <el-table-column
             v-if="column.Length <= 50 && column.Name.toLowerCase() != 'id'"
@@ -45,7 +39,7 @@
             :label="column.DisplayName"
             :prop="column.Name"
           >
-            <template slot-scope="scope">
+            <template v-solt="scope">
               <template v-if="column.TypeStr == 'Boolean'">
                 <el-switch
                   :value="scope.row[column.Name]"
@@ -60,7 +54,7 @@
         </template>
       </slot>
 
-      <slot name="tableActions">
+      <slot :handleUpdate="handleUpdate" :handleDelete="handleDelete" name="tableActions">
         <el-table-column
           label="操作"
           align="center"
@@ -68,23 +62,25 @@
           fixed="right"
           class-name="small-padding fixed-width"
         >
-          <template slot-scope="scope">
+          <template v-solt="scope">
             <el-button
               type="primary"
               size="mini"
               @click="handleUpdate(scope.row)"
-            >编辑</el-button>
+            >编辑</el-button
+            >
             <el-button
               v-if="scope.row.status != 'deleted'"
               size="mini"
               type="danger"
               @click="handleDelete(scope.row)"
-            >删除</el-button>
+            >删除</el-button
+            >
           </template>
         </el-table-column>
       </slot>
     </el-table>
-    <slot name="page">
+    <slot :total="total" :listQuery="listQuery" :getList="getList" name="page">
       <pagination
         v-show="total > 0"
         :total="total"
@@ -109,9 +105,15 @@ export default {
   name: 'TableBase',
   components: { Pagination },
   props: {
-    tableData: Array,
-    tableColumns: Array,
-    tableName: String
+    tableData: {
+      type: Array,
+      required: false,
+      default: function() {
+        return []
+      }
+    },
+    tableColumns: { type: Array, default: () => [] },
+    tableName: { type: String, required: true }
   },
   data() {
     return {
