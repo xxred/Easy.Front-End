@@ -73,7 +73,7 @@ yarn build
 
 ## 添加/覆盖页面
 
-- 覆盖一个页面，为什么是直接覆盖一个，因为有默认模板，只要检测到项目指定目录没有页面，即采用默认页面。
+- 覆盖一个页面，为什么是直接覆盖一个，因为有默认模板，只要检测到项目指定目录没有页面，即采用默认页面。例如，覆盖用户部分的table 页（数据列表）和 form 页（表单），直接新建`/src/views/User/index.vue`、`/src/views/User/form.vue`
 - 后台存储每个表的信息，因此 table 页（数据列表）和 form 页（表单）的字段都来自后端，遍历展示。每个表对应一个 table 页和一个 form 页，table 页的关键是 tableName 表名，根据表名请求后端拿到所有字段（如果有需要可以自建表维护字段信息并添加权限过滤字段啥的），form 页关键除了 tableName 还有 id，如果是编辑的话可在路由获取 id
 - 以下是实例：
 
@@ -173,5 +173,5 @@ yarn build
 ```
 
 - 以上实例有删减，完全代码参考[这里](https://github.com/xxred/Easy.Front-End/tree/master/src/views)，注意文件夹名称即表名，`index.vue`即 table 页，`form.vue`即 form 页
-- 如果不知道要修改的页面对应表名是什么，请看浏览器地址栏，规则是:table 页->`/${tableName}/index`、form 页->`/:tableName(${tableName})/:type(Edit|Add)/:id?`。
+- 如果不知道要修改的页面对应表名是什么，请看浏览器地址栏，路由规则(写法源于vue-router)是:table 页->`/${tableName}/index`、form 页->`/:tableName(${tableName})/:type(Edit|Add)/:id?`。
 - 如果是全部页面完全替换，则覆盖`项目目录/src/views/layout/Layout.vue`即可，完全自定义 ui，只使用项目的非 ui 功能
