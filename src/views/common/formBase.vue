@@ -68,7 +68,7 @@
   </div>
 </template>
 <script>
-import { createData, updateData, queryData, getColumns } from 'src/api/base'
+import { createData, updateData, queryData, getColumns } from '@/api/base'
 export default {
   name: 'FormBase',
   data() {

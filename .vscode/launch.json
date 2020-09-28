@@ -3,7 +3,14 @@
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
+    "configurations": [
+        {
+            "command": "yarn dev",
+            "name": "Run yarn dev",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome",

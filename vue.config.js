@@ -25,8 +25,37 @@ module.exports = {
 
     // 配置模块搜索目录
     config.resolve.modules.add(resolve('./'))
+
+    config.optimization.splitChunks({
+      // chunks: 'all'
+      // minSize: 4000000,
+      // enforceSizeThreshold: 400000000,
+      // cacheGroups: {
+      //   default: {
+      //     test: /[\\/]node_modules[\\/]/,
+      //     chunks: 'all'
+      //   }
+      // }
+      // maxSize: 3000000
+    })
+    // config.optimization.runtimeChunk('single')
+
+    // config.optimization.minimize(true)
+
+    // 用cdn方式引入
+    config.externals({
+      'vue': 'Vue',
+      'vuex': 'Vuex',
+      'vue-router': 'VueRouter',
+      'axios': 'axios'
+    })
   },
-  // configureWebpack: config => {},
+  configureWebpack: config => {
+    // 编译多个文件
+    const entry = config.entry
+    entry['index'] = './src/index.js'
+    entry['elementui'] = 'element-ui'
+  },
   // devServer: {
   //   proxy: 'http://localhost:44336/',
   //   https: false
@@ -34,5 +63,8 @@ module.exports = {
   // outputDir: '../Easy.Admin/wwwroot/dist',
   // publicPath: publicPath,
   // 导入vue包含编译器 https://cli.vuejs.org/zh/config/#runtimecompiler
-  runtimeCompiler: true
+  runtimeCompiler: true,
+  css: {
+    extract: true
+  }
 }

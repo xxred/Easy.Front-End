@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import store from 'src/store'
 
 // you can set only in production env show the error-log

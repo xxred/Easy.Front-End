@@ -39,7 +39,7 @@
             :label="column.DisplayName"
             :prop="column.Name"
           >
-            <template v-solt="scope">
+            <template slot-scope="scope">
               <template v-if="column.TypeStr == 'Boolean'">
                 <el-switch
                   :value="scope.row[column.Name]"
@@ -62,7 +62,7 @@
           fixed="right"
           class-name="small-padding fixed-width"
         >
-          <template v-solt="scope">
+          <template slot-scope="scope">
             <el-button
               type="primary"
               size="mini"
@@ -105,14 +105,8 @@ export default {
   name: 'TableBase',
   components: { Pagination },
   props: {
-    tableData: {
-      type: Array,
-      required: false,
-      default: function() {
-        return []
-      }
-    },
-    tableColumns: { type: Array, default: () => [] },
+    tableData: { type: Array, default: () => undefined },
+    tableColumns: { type: Array, default: () => undefined },
     tableName: { type: String, required: true }
   },
   data() {

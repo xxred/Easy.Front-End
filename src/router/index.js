@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
-Vue.use(Router)
+// import Vue from 'vue'
+// import Router from 'vue-router'
 
 /* Layout */
 const Layout = () => import('src/views/layout/Layout')
@@ -92,7 +90,7 @@ export const constantRouterMap = [
   }
 ]
 
-export default new Router({
+export default new VueRouter({
   mode: 'history', // require service support
   scrollBehavior: () => ({
     y: 0

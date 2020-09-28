@@ -1,41 +1,34 @@
 import Vue from 'vue'
-import Storage from 'src/utils/storage'
-import Request from 'src/utils/request'
+// import VueRouter from 'vue-router'
+// import Vuex from 'vuex'
+// import Element from 'element-ui'
+import EasyFE from './index'
+import apiSettings from './apiSettings'
 
-import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
-import Element from 'element-ui'
+/* A modern alternative to CSS resets */
+import 'normalize.css/normalize.css'
+/* element-ui */
 import 'element-ui/lib/theme-chalk/index.css'
+import './styles/index.scss'
 
-import 'src/styles/index.scss' // global css
+// Vue.use(VueRouter)
+// Vue.use(Vuex)
 
-import App from 'src/App.vue'
-import router from 'src/router'
-import store from 'src/store'
+const router = EasyFE.Router
+const store = EasyFE.Store
+const App = EasyFE.App
+// const Storage = EasyFE.Storage
 
-import apiSettings from 'src/apiSettings'
+// Vue.use(Element, {
+//   size: Storage.getItem('size') || 'medium' // set element-ui default size
+//   // i18n: (key, value) => i18n.t(key, value)
+// })
+Vue.use(EasyFE)
 
-// 设置api地址
-store.dispatch('setApiSettings', apiSettings)
-
-import 'src/icons' // svgicon
-import 'src/errorLog' // error log
-import 'src/permission' // permission control
-
-Vue.use(Element, {
-  size: Storage.getItem('size') || 'medium' // set element-ui default size
-  // i18n: (key, value) => i18n.t(key, value)
-})
-
-// 注册全局table基础组件
-Vue.component('table-base', () => import('src/views/common/tableBase.vue'))
-Vue.component('form-base', () => import('src/views/common/formBase.vue'))
-
-Vue.config.productionTip = false
-Vue.prototype.$axios = Request
+EasyFE.setApiSettings(apiSettings)
 
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')
